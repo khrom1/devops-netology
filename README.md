@@ -1,4 +1,7 @@
 # devops-netology
+
+
+
 Исключены будут все файлы и папки внутри /.terraform/
 все файлы оканчивающиеся на .tfstate или содержащие .tfstate.
 файл лога crash.log
