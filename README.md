@@ -6,3 +6,4 @@
 все файлы оканчивающиеся на .tfvars
 файлы override.tf override.tf.json а также оканчивающиеся на _override.tf и _override.tf.json
 скрытый файл конфигурации .terraformrc а также файл terraform.rc
+Теперь измените содержание файла README.md, добавив новую строчку.
