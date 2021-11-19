@@ -22,3 +22,4 @@
  
 Ответ: Полный хеш коммита aefea = aefead2207ef7e2aa5dc81a34aedf0cad4c32545
 комментарий коммита Update CHANGELOG.md
+# Задание 1
