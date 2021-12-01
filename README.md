@@ -219,14 +219,22 @@ vagrant@vagrant:~$
 Основываясь на знаниях о просмотре текущих (например, PATH) и установке новых переменных; командах, которые мы рассматривали, добейтесь в выводе type -a bash в виртуальной машине наличия первым пунктом в списке:
 
 
-vagrant@vagrant:~$ mkdir /tmp/new_path_dir/
+vagrant@vagrant:~$ mkdir 
+
 vagrant@vagrant:~$ cp /bin/bash /tmp/new_path_dir/
+
 vagrant@vagrant:~$ PATH=/tmp/new_path_dir/:$PATH
+
 vagrant@vagrant:~$ type -a bash
+
 bash is /tmp/new_path_dir/bash
+
 bash is /tmp/test/bash
+
 bash is /tmp/new_path_dir/bash
+
 bash is /usr/bin/bash
+
 bash is /bin/bash
 
 # Задание 12
