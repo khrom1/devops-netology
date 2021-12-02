@@ -16,14 +16,23 @@ cd-встроенная команда .
 Ответ:
 
 khrom@srv-1:~/Netology/test$ nano test.txt
+
 khrom@srv-1:~/Netology/test$ grep 123 test.txt -c
+
 1
+
 khrom@srv-1:~/Netology/test$ grep 1243 test.txt -c
+
 0
+
 khrom@srv-1:~/Netology/test$ grep 123 test.txt |wc -l
+
 1
+
 khrom@srv-1:~/Netology/test$ grep 1243 test.txt |wc -l
+
 0
+
 khrom@srv-1:~/Netology/test$
 
 ## Задание 3
