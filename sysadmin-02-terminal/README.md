@@ -49,6 +49,28 @@ systemd(1)─┬─VBoxService(798)─┬─{VBoxService}(800)
 
 Как будет выглядеть команда, которая перенаправит вывод stderr ls на другую сессию терминала?
 
+из pts/0
+
+ls -a test 2>/dev/pts/1
+
+в pts/1
+
+ls: cannot access 'test': No such file or directory
+
+## Задание 5
+
+Получится ли одновременно передать команде файл на stdin и вывести ее stdout в другой файл? Приведите работающий пример.
 
 
+vagrant@vagrant:~/test1$  cat <test1.txt >test2.txt
+vagrant@vagrant:~/test1$ cat test2.txt
+test12123
+
+## Задание 6
+
+Получится ли вывести находясь в графическом режиме данные из PTY в какой-либо из эмуляторов TTY? Сможете ли вы наблюдать выводимые данные?
+
+Отправить можно но ничего не увидешь
+
+khrom@srv-1:~$ echo Hello >/dev/tty2
 
