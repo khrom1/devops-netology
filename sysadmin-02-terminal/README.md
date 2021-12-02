@@ -63,7 +63,9 @@ ls: cannot access 'test': No such file or directory
 
 
 vagrant@vagrant:~/test1$  cat <test1.txt >test2.txt
+
 vagrant@vagrant:~/test1$ cat test2.txt
+
 test12123
 
 ## Задание 6
