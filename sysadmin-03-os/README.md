@@ -73,7 +73,25 @@ openat(AT_FDCWD, "/etc/magic", O_RDONLY) = 3
     На какие файлы вы увидели вызовы группы `open` за первую секунду работы утилиты? Воспользуйтесь пакетом `bpfcc-tools` для Ubuntu 20.04. Дополнительные [сведения по установке](https://github.com/iovisor/bcc/blob/master/INSTALL.md).
 
 
+
 # Ответ:
+
+sudo apt install bpfcc-tools
+
+khrom@srv-1:~$ sudo su - root
+
+root@srv-1:~#  /usr/sbin/opensnoop-bpfcc
+
+3 warnings generated.
+PID    COMM               FD ERR PATH
+825    thermald            9   0 /sys/class/thermal/thermal_zone0/temp
+1      systemd            81   0 /proc/378/cgroup
+1      systemd            81   0 /proc/764/cgroup
+825    thermald            9   0 /sys/class/thermal/thermal_zone0/temp
+1470   gsd-color          13   0 /etc/localtime
+1470   gsd-color          13   0 /etc/localtime
+799    irqbalance          6   0 /proc/interrupts
+799    irqbalance          6   0 /proc/stat
 
 
 
