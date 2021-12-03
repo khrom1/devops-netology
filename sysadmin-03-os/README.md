@@ -10,6 +10,7 @@
 
 # Задание 2.
 Попробуйте использовать команду `file` на объекты разных типов на файловой системе. Например:
+
     ```bash
     vagrant@netology1:~$ file /dev/tty
     /dev/tty: character special (5/0)
