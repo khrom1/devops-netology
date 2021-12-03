@@ -82,7 +82,7 @@ khrom@srv-1:~$ sudo su - root
 
 root@srv-1:~#  /usr/sbin/opensnoop-bpfcc
 
-3 warnings generated.
+ ```bash  3 warnings generated.
 PID    COMM               FD ERR PATH
 825    thermald            9   0 /sys/class/thermal/thermal_zone0/temp
 1      systemd            81   0 /proc/378/cgroup
