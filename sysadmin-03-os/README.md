@@ -100,6 +100,17 @@ PID    COMM               FD ERR PATH
 
 # Ответ:
 
+Используется ситемный вызов - uname()
+
+khrom@srv-1:~$ man 2 uname
+
+/proc
+
+Part of the utsname information is also accessible via
+       /proc/sys/kernel/{ostype, hostname, osrelease, version,
+       domainname}.
+
+
 
 # 7. Чем отличается последовательность команд через `;` и через `&&` в bash? Например:
 
