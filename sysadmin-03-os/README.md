@@ -37,9 +37,13 @@ openat(AT_FDCWD, "/usr/share/misc/magic.mgc", O_RDONLY) = 3
 так же ищет файлы пользователя
 
 stat("/home/khrom/.magic.mgc", 0x7fff8ff29750) = -1 ENOENT (Нет такого файла или каталога)
+
 stat("/home/khrom/.magic", 0x7fff8ff29750) = -1 ENOENT (Нет такого файла или каталога)
+
 openat(AT_FDCWD, "/etc/magic.mgc", O_RDONLY) = -1 ENOENT (Нет такого файла или каталога)
+
 stat("/etc/magic", {st_mode=S_IFREG|0644, st_size=111, ...}) = 0
+
 openat(AT_FDCWD, "/etc/magic", O_RDONLY) = 3
 
 
