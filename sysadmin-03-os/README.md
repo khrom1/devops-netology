@@ -92,6 +92,7 @@ PID    COMM               FD ERR PATH
 1470   gsd-color          13   0 /etc/localtime
 799    irqbalance          6   0 /proc/interrupts
 799    irqbalance          6   0 /proc/stat
+ ```
 
 
 
