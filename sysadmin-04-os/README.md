@@ -64,19 +64,62 @@ vagrant@vagrant:~$ dmesg |grep virtual
 
 Ответ
 
-
+Это лимит на количество открытых дескрипторов для пользователя 
 
 khrom@srv-1:~/Netology$  /sbin/sysctl -n fs.nr_open
+1048576
+
+khrom@srv-1:~$ ulimit -n
+1024
+
+
+khrom@srv-1:~$ ulimit -Hn
 1048576
 
 # Задание 6.
 
 Запустите любой долгоживущий процесс (не `ls`, который отработает мгновенно, а, например, `sleep 1h`) в отдельном неймспейсе процессов; покажите, что ваш процесс работает под PID 1 через `nsenter`. Для простоты работайте в данном задании под root (`sudo -i`). Под обычным пользователем требуются дополнительные опции (`--map-root-user`) и т.д.
 
+Ответ 
+
+khrom@srv-1:~$ sudo -i
+root@srv-1:~# ps aux | grep sleep
+khrom       3909  0.0  0.0  16716   588 pts/1    S+   02:10   0:00 sleep 1h
+root        3991  0.0  0.0  17696   660 pts/0    S+   02:13   0:00 grep --color=auto sleep
+
+root@srv-1:~# nsenter --target 3909 --pid --mount
+root@srv-1:/# ps aux
+
+root@srv-1:/# ps
+    PID TTY          TIME CMD
+   3980 pts/0    00:00:00 sudo
+   3981 pts/0    00:00:00 bash
+   4082 pts/0    00:00:00 nsenter
+   4083 pts/0    00:00:00 bash
+   4093 pts/0    00:00:00 ps
+
 # Задание 7.
 
 Найдите информацию о том, что такое `:(){ :|:& };:`. Запустите эту команду в своей виртуальной машине Vagrant с Ubuntu 20.04 (**это важно, поведение в других ОС не проверялось**). Некоторое время все будет "плохо", после чего (минуты) – ОС должна стабилизироваться. Вызов `dmesg` расскажет, какой механизм помог автоматической стабилизации. Как настроен этот механизм по-умолчанию, и как изменить число процессов, которое можно создать в сессии?
 
+Ответ
+
+-bash: fork: retry: Resource temporarily unavailable
+-bash: fork: Resource temporarily unavailable
+-bash: fork: Resource temporarily unavailable
+-bash: fork: Resource temporarily unavailable
+-bash: fork: Resource temporarily unavailable
+-bash: fork: retry: Resource temporarily unavailable
+-bash: fork: Resource temporarily unavailable
+-bash: fork: Resource temporarily unavailable
+-bash: fork: retry: Resource temporarily unavailable
+-bash: fork: Resource temporarily unavailable
+
+[ 3066.276899] cgroup: fork rejected by pids controller in /user.slice/user-1000.slice/session-8.scope
+
+
+
+Как понял на bash'e просходит бесконечное создание шелов . ограничить можно ulimit -u 
  
  ---
 
