@@ -10,9 +10,144 @@
 
 https://drive.google.com/file/d/19-62IX1Q-Js3tNTQVeHx1YgmZJVLoCLY/view?usp=sharing
 
+```bash
+
+vagrant@vagrant:~$ ps aux |grep node_exporter
+node_ex+     630  0.0  2.3 715024 11452 ?        Ssl  18:28   0:00 /usr/local/bin/node_exporter
+vagrant     1319  0.0  0.1   9032   736 pts/0    S+   18:33   0:00 grep --color=auto node_exporter
+
+vagrant@vagrant:~$ ps aux |grep node_exporter
+node_ex+     630  0.0  2.3 715024 11452 ?        Ssl  18:28   0:00 /usr/local/bin/node_exporter
+vagrant     1319  0.0  0.1   9032   736 pts/0    S+   18:33   0:00 grep --color=auto node_exporter
+vagrant@vagrant:~$
+vagrant@vagrant:~$ vagrant@vagrant:~$ ps aux |grep node_exporter
+-bash: vagrant@vagrant:~$: command not found
+vagrant@vagrant:~$ node_ex+     630  0.0  2.3 715024 11452 ?        Ssl  18:28   0:00 /usr/local/bin/node_exporter
+-bash: node_ex+: command not found
+vagrant@vagrant:~$ vagrant     1319  0.0  0.1   9032   736 pts/0    S+   18:33   0:00 grep --color=auto node_exporter
+-bash: vagrant: command not found
+vagrant@vagrant:~$ sudo -s
+root@vagrant:/home/vagrant# systemctl stop node_exporter
+root@vagrant:/home/vagrant# systemctl status  node_exporter
+● node_exporter.service - Node Exporter
+     Loaded: loaded (/etc/systemd/system/node_exporter.service; enabled; vendor preset: enabled)
+     Active: inactive (dead) since Thu 2021-12-16 18:35:44 UTC; 22s ago
+    Process: 630 ExecStart=/usr/local/bin/node_exporter $OPTIONS (code=killed, signal=TERM)
+   Main PID: 630 (code=killed, signal=TERM)
+
+Dec 16 18:28:35 vagrant node_exporter[630]: level=info ts=2021-12-16T18:28:35.171Z caller=node_exporter.go:115 collector=udp_queues
+Dec 16 18:28:35 vagrant node_exporter[630]: level=info ts=2021-12-16T18:28:35.171Z caller=node_exporter.go:115 collector=uname
+Dec 16 18:28:35 vagrant node_exporter[630]: level=info ts=2021-12-16T18:28:35.171Z caller=node_exporter.go:115 collector=vmstat
+Dec 16 18:28:35 vagrant node_exporter[630]: level=info ts=2021-12-16T18:28:35.171Z caller=node_exporter.go:115 collector=xfs
+Dec 16 18:28:35 vagrant node_exporter[630]: level=info ts=2021-12-16T18:28:35.171Z caller=node_exporter.go:115 collector=zfs
+Dec 16 18:28:35 vagrant node_exporter[630]: level=info ts=2021-12-16T18:28:35.171Z caller=node_exporter.go:199 msg="Listening on" address=:9100
+Dec 16 18:28:35 vagrant node_exporter[630]: level=info ts=2021-12-16T18:28:35.171Z caller=tls_config.go:191 msg="TLS is disabled." http2=false
+Dec 16 18:35:44 vagrant systemd[1]: Stopping Node Exporter...
+Dec 16 18:35:44 vagrant systemd[1]: node_exporter.service: Succeeded.
+Dec 16 18:35:44 vagrant systemd[1]: Stopped Node Exporter.
+root@vagrant:/home/vagrant# systemctl start node_exporter
+root@vagrant:/home/vagrant# systemctl status  node_exporter
+● node_exporter.service - Node Exporter
+     Loaded: loaded (/etc/systemd/system/node_exporter.service; enabled; vendor preset: enabled)
+     Active: active (running) since Thu 2021-12-16 18:36:37 UTC; 26s ago
+   Main PID: 1357 (node_exporter)
+      Tasks: 5 (limit: 466)
+     Memory: 3.0M
+     CGroup: /system.slice/node_exporter.service
+             └─1357 /usr/local/bin/node_exporter
+
+Dec 16 18:36:37 vagrant node_exporter[1357]: level=info ts=2021-12-16T18:36:37.068Z caller=node_exporter.go:115 collector=thermal_zone
+Dec 16 18:36:37 vagrant node_exporter[1357]: level=info ts=2021-12-16T18:36:37.068Z caller=node_exporter.go:115 collector=time
+Dec 16 18:36:37 vagrant node_exporter[1357]: level=info ts=2021-12-16T18:36:37.068Z caller=node_exporter.go:115 collector=timex
+Dec 16 18:36:37 vagrant node_exporter[1357]: level=info ts=2021-12-16T18:36:37.068Z caller=node_exporter.go:115 collector=udp_queues
+Dec 16 18:36:37 vagrant node_exporter[1357]: level=info ts=2021-12-16T18:36:37.068Z caller=node_exporter.go:115 collector=uname
+Dec 16 18:36:37 vagrant node_exporter[1357]: level=info ts=2021-12-16T18:36:37.068Z caller=node_exporter.go:115 collector=vmstat
+Dec 16 18:36:37 vagrant node_exporter[1357]: level=info ts=2021-12-16T18:36:37.068Z caller=node_exporter.go:115 collector=xfs
+Dec 16 18:36:37 vagrant node_exporter[1357]: level=info ts=2021-12-16T18:36:37.068Z caller=node_exporter.go:115 collector=zfs
+Dec 16 18:36:37 vagrant node_exporter[1357]: level=info ts=2021-12-16T18:36:37.068Z caller=node_exporter.go:199 msg="Listening on" address=:9100
+Dec 16 18:36:37 vagrant node_exporter[1357]: level=info ts=2021-12-16T18:36:37.069Z caller=tls_config.go:191 msg="TLS is disabled." http2=false
+root@vagrant:/home/vagrant#
+
+```
+
+ прописан файл конфигурации /etc/systemd/system/node_exporter.service
+
+
+[Unit]
+Description=Node Exporter
+
+[Service]
+User=node_exporter
+Group=node_exporter
+EnvironmentFile=-/etc/sysconfig/node_exporter
+ExecStart=/usr/local/bin/node_exporter $OPTIONS
+
+[Install]
+WantedBy=multi-user.target
+
+
+
+
+
 # Задание 2.
 
 Ознакомьтесь с опциями node_exporter и выводом `/metrics` по-умолчанию. Приведите несколько опций, которые вы бы выбрали для базового мониторинга хоста по CPU, памяти, диску и сети.
+
+
+CPU 
+
+node_cpu_seconds_total{cpu="0",mode="idle"} 10493.04
+
+node_cpu_seconds_total{cpu="0",mode="iowait"} 2.26
+
+node_cpu_seconds_total{cpu="0",mode="irq"} 0
+
+node_cpu_seconds_total{cpu="0",mode="nice"} 0
+
+node_cpu_seconds_total{cpu="0",mode="softirq"} 2.71
+
+node_cpu_seconds_total{cpu="0",mode="steal"} 0
+
+node_cpu_seconds_total{cpu="0",mode="system"} 22.41
+
+node_cpu_seconds_total{cpu="0",mode="user"} 16.15
+
+node_cpu_seconds_total{cpu="1",mode="idle"} 10500.56
+
+node_cpu_seconds_total{cpu="1",mode="iowait"} 1.94
+
+node_cpu_seconds_total{cpu="1",mode="irq"} 0
+
+node_cpu_seconds_total{cpu="1",mode="nice"} 0
+
+node_cpu_seconds_total{cpu="1",mode="softirq"} 2.17
+
+node_cpu_seconds_total{cpu="1",mode="steal"} 0
+
+node_cpu_seconds_total{cpu="1",mode="system"} 16.07
+
+node_cpu_seconds_total{cpu="1",mode="user"} 11.87
+
+memory
+
+node_memory_Active_anon_bytes 6.4794624e+07
+
+node_memory_Active_file_bytes 1.17792768e+08
+
+disk
+
+
+node_disk_io_time_weighted_seconds_total{device="dm-0"} 27.088
+
+node_disk_io_time_weighted_seconds_total{device="dm-1"} 2.848
+
+node_disk_io_time_weighted_seconds_total{device="sda"} 5.22
+
+network
+
+node_network_address_assign_type{device="eth0"} 0
+
+node_network_address_assign_type{device="lo"} 0
 
 # Задание 3.
 
