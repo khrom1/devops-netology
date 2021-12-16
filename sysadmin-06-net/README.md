@@ -223,3 +223,45 @@ root@vagrant:/home/vagrant#
 
 # Ответ:
 
+Ethernet называется Ethernet II
+
+0: Зарезервирован, должен быть равен 0
+
+1: Не фрагментировать
+
+2: У пакета ещё есть фрагменты
+
+
+```bash
+
+Internet Protocol Version 4, Src: 10.0.2.2, Dst: 10.0.2.15
+    0100 .... = Version: 4
+    .... 0101 = Header Length: 20 bytes (5)
+    Differentiated Services Field: 0x00 (DSCP: CS0, ECN: Not-ECT)
+        0000 00.. = Differentiated Services Codepoint: Default (0)
+        .... ..00 = Explicit Congestion Notification: Not ECN-Capable Transport (0)
+    Total Length: 40
+    Identification: 0x0e0e (3598)
+    Flags: 0x0000
+        0... .... .... .... = Reserved bit: Not set
+        .0.. .... .... .... = Don't fragment: Not set
+        ..0. .... .... .... = More fragments: Not set
+    Fragment offset: 0
+    Time to live: 64
+    Protocol: TCP (6)
+    Header checksum: 0x54b2 [validation disabled]
+    [Header checksum status: Unverified]
+    Source: 10.0.2.2
+    Destination: 10.0.2.15
+```
+
+OUI можно увидеть в  Ethernet пакете. первая половина MAC адреса. 
+
+08:00:27:00:00:00   Virtual Machine
+Oracle VirtualBox 5.2
+
+```bash
+Ethernet II, Src: PcsCompu_73:60:cf (08:00:27:73:60:cf), Dst: RealtekU_12:35:02 (52:54:00:12:35:02)
+    Destination: RealtekU_12:35:02 (52:54:00:12:35:02)
+        Address: RealtekU_12:35:02 (52:54:00:12:35:02)
+```
