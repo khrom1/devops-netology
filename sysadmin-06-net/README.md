@@ -96,6 +96,13 @@ UDP- не использует проверки (в отличии от TCP)  е
 
 # Ответ:
 
+                                     Client                 Server
+                                   ESTABLESHED            ESTABLESHED
+                                   Connection             Connection
+    Step 1 (FIN From Client)       FIN_WAIT_1             CLOSE_WAIT     
+    Step 2 (FIN-ACC from Server)   FIN_WAIT_2             CLOSE_WAIT
+    Step 3 (ACK from Client)       TIME WAIT              LAST ACK
+                                   Closed                 Closed
 
 # Задание 8
 
