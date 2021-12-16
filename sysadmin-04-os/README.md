@@ -220,6 +220,8 @@ khrom@srv-1:~$ ulimit -Hn
 
 Ответ 
 
+```bash
+
 khrom@srv-1:~$ sudo -i
 root@srv-1:~# ps aux | grep sleep
 khrom       3909  0.0  0.0  16716   588 pts/1    S+   02:10   0:00 sleep 1h
@@ -235,6 +237,8 @@ root@srv-1:/# ps
    4082 pts/0    00:00:00 nsenter
    4083 pts/0    00:00:00 bash
    4093 pts/0    00:00:00 ps
+   
+   ```
 
 # Задание 7.
 
