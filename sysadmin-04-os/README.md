@@ -246,6 +246,8 @@ root@srv-1:/# ps
 
 Ответ
 
+```bash
+
 -bash: fork: retry: Resource temporarily unavailable
 -bash: fork: Resource temporarily unavailable
 -bash: fork: Resource temporarily unavailable
@@ -258,6 +260,8 @@ root@srv-1:/# ps
 -bash: fork: Resource temporarily unavailable
 
 [ 3066.276899] cgroup: fork rejected by pids controller in /user.slice/user-1000.slice/session-8.scope
+
+```
 
 
 
