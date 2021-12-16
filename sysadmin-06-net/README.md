@@ -155,6 +155,28 @@ syslog отказался от UDP в пользу TCP
 
 # Ответ:
 
+6 портов IPV4 systemd,rpcbind,systemd-resolve,netdata,sshd  
+
+5 портов IPV6 systemd,rpcbind,netdata,sshd ,node_exporter 
+
+```bash
+
+root@vagrant:/home/vagrant#  lsof -n -itcp -stcp:listen
+COMMAND    PID            USER   FD   TYPE DEVICE SIZE/OFF NODE NAME
+systemd      1            root   35u  IPv4  16217      0t0  TCP *:sunrpc (LISTEN)
+systemd      1            root   37u  IPv6  16624      0t0  TCP *:sunrpc (LISTEN)
+rpcbind    578            _rpc    4u  IPv4  16217      0t0  TCP *:sunrpc (LISTEN)
+rpcbind    578            _rpc    6u  IPv6  16624      0t0  TCP *:sunrpc (LISTEN)
+systemd-r  579 systemd-resolve   13u  IPv4  18299      0t0  TCP 127.0.0.53:domain (LISTEN)
+netdata    809         netdata    4u  IPv4  24286      0t0  TCP *:19999 (LISTEN)
+netdata    809         netdata   35u  IPv6  24392      0t0  TCP [::1]:8125 (LISTEN)
+netdata    809         netdata   36u  IPv4  24393      0t0  TCP 127.0.0.1:8125 (LISTEN)
+sshd       829            root    3u  IPv4  23409      0t0  TCP *:ssh (LISTEN)
+sshd       829            root    4u  IPv6  23411      0t0  TCP *:ssh (LISTEN)
+node_expo 1357   node_exporter    3u  IPv6  29309      0t0  TCP *:9100 (LISTEN)
+
+```
+
 # Задание 13
 
  Какой ключ нужно добавить в `tcpdump`, чтобы он начал выводить не только заголовки, но и содержимое фреймов в текстовом виде? А в текстовом и шестнадцатиричном?
