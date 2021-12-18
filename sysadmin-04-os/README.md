@@ -218,7 +218,24 @@ khrom@srv-1:~$ ulimit -Hn
 
 Запустите любой долгоживущий процесс (не `ls`, который отработает мгновенно, а, например, `sleep 1h`) в отдельном неймспейсе процессов; покажите, что ваш процесс работает под PID 1 через `nsenter`. Для простоты работайте в данном задании под root (`sudo -i`). Под обычным пользователем требуются дополнительные опции (`--map-root-user`) и т.д.
 
-Ответ 
+Ответ с доработкой 
+
+```bash
+vagrant     1445  0.0  0.8   9836  4084 pts/3    Ss   21:58   0:00 -bash
+root        1467  0.0  0.1   8080   592 pts/2    S+   22:02   0:00 unshare -f --pid --mount-proc sleep 1h
+root        1468  0.0  0.1   8076   596 pts/2    S+   22:02   0:00 sleep 1h
+root        1483  0.0  0.0      0     0 ?        I    22:03   0:00 [kworker/0:1]
+vagrant     1489  0.0  0.6  11492  3388 pts/3    R+   22:04   0:00 ps aux
+vagrant@vagrant:~$ sudo -i
+root@vagrant:~# nsenter --target 1468  --pid --mount
+root@vagrant:/# ps aux
+USER         PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
+root           1  0.0  0.1   8076   596 pts/2    S+   22:02   0:00 sleep 1h
+root           2  0.0  0.8   9836  4204 pts/3    S    22:06   0:00 -bash
+root          12  0.0  0.6  11492  3360 pts/3    R+   22:06   0:00 ps aux
+```
+
+Ответ старый неполный
 
 ```bash
 
