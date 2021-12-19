@@ -61,6 +61,8 @@ Connection closed by foreign host.
 
 Код ответа 200
 
+Успешно". Запрос успешно обработан. Что значит "успешно", зависит от метода HTTP, который был запрошен:
+
 https://drive.google.com/file/d/1Q4iiUAJJxDikwOQy5jRxsat4K1YwEI1K/view?usp=sharing
 
 # Задание 3. Какой IP адрес у вас в интернете?
