@@ -7,6 +7,35 @@
 # Задание 2. Могут ли файлы, являющиеся жесткой ссылкой на один объект, иметь разные права доступа и владельца? Почему?
 
 # Ответ:
+ 
+hardlink - это всего лишь ссылка на сам файл права доступа и владелец одинаковы 
+
+ ```bash
+khrom@srv-1:~/Netology/test$ rm 123_hl
+khrom@srv-1:~/Netology/test$ touch 123_hl
+khrom@srv-1:~/Netology/test$ ln 123_hl 123_link
+khrom@srv-1:~/Netology/test$ ls -ilh
+итого 4,0K
+7099270 -rw-rw-r-- 2 khrom khrom 0 янв  2 14:24 123_hl
+7099270 -rw-rw-r-- 2 khrom khrom 0 янв  2 14:24 123_link
+7101172 -rw-rw-r-- 1 khrom khrom 5 дек  4 07:44 khrom.log
+
+
+khrom@srv-1:~/Netology/test$ chmod 0711 123_hl
+khrom@srv-1:~/Netology/test$ ls -ilh
+итого 4,0K
+7099270 -rwx--x--x 2 khrom khrom 0 янв  2 14:24 123_hl
+7099270 -rwx--x--x 2 khrom khrom 0 янв  2 14:24 123_link
+7101172 -rw-rw-r-- 1 khrom khrom 5 дек  4 07:44 khrom.log
+ 
+
+
+     
+
+
+  ```
+
+
 
 # Задание 3. Сделайте `vagrant destroy` на имеющийся инстанс Ubuntu. Замените содержимое Vagrantfile следующим:
 
