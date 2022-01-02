@@ -305,16 +305,16 @@ sdc                    8:32   0  2.5G  0 disk
      0
      ```
 
-# Ответ:
- ```bash
+ ### Ответ:
+```bash
  root@vagrant:~# gzip -t /tmp/new/test.gz && echo $?
 0
 
   ```
 # Задание 16. Используя pvmove, переместите содержимое PV с RAID0 на RAID1.
 
-# Ответ:
- ```bash
+ ### Ответ:
+```bash
  root@vagrant:~#  pvmove /dev/md0
   /dev/md0: Moved: 12.00%
   /dev/md0: Moved: 100.00%
@@ -322,8 +322,8 @@ sdc                    8:32   0  2.5G  0 disk
   ```
 # Задание 17. Сделайте `--fail` на устройство в вашем RAID1 md.
 
-# Ответ:
- ```bash
+ ### Ответ:
+```bash
  root@vagrant:~# mdadm /dev/md1 --fail /dev/sdb1
 mdadm: set /dev/sdb1 faulty in /dev/md1
 root@vagrant:~# mdadm -D /dev/md1
@@ -359,8 +359,8 @@ Consistency Policy : resync
   ```
 # Задание 18. Подтвердите выводом `dmesg`, что RAID1 работает в деградированном состоянии.
 
-# Ответ:
- ```bash
+ ### Ответ:
+```bash
  root@vagrant:~# dmesg |grep md1
 [ 2562.214818] md/raid1:md1: not clean -- starting background reconstruction
 [ 2562.214821] md/raid1:md1: active with 2 out of 2 mirrors
@@ -379,16 +379,15 @@ Consistency Policy : resync
      0
      ```
 
-# Ответ:
- ```bash
+ ### Ответ:
+```bash
  root@vagrant:~# gzip -t /tmp/new/test.gz && echo $?
 0
 
   ```
 # Задание 20. Погасите тестовый хост, `vagrant destroy`.
 
-# Ответ:
-
+ ### Ответ:
   ```bash
  vagrant@vagrant:~$ logout
 Connection to 127.0.0.1 closed.
