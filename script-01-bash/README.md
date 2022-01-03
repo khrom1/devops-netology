@@ -110,6 +110,32 @@ root@srv-1:/home/khrom/Netology#
 
 ### Ваш скрипт:
 ```bash
-???
+root@srv-1:/home/khrom/Netology# bash 2_test_ip
+root@srv-1:/home/khrom/Netology# cat 2_test_ip.log
+Пн 03 янв 2022 21:28:05 MSK
+      ERROR 192.168.0.1  status=28
+Пн 03 янв 2022 21:28:06 MSK
+      ERROR 87.250.250.24  status=28
+root@srv-1:/home/khrom/Netology# cat 2_test_ip
+#!/usr/bin/env bash
+IP=(192.168.0.1 173.194.222.113 87.250.250.24)
+timeout=1
+stat=0
+while (($stat == 0))
+do
+    for ip in ${IP[*]}
+    do
+        curl -Is --connect-timeout 1 $ip:80 >/dev/null
+        stat=$?
+        if (($stat != 0))
+        then
+             date >>2_test_ip.log
+             echo  "      ERROR $ip "  status=$stat  >>2_test_ip.log
+
+      fi
+   done
+done
+root@srv-1:/home/khrom/Netology#
+
 ```
 
