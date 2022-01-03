@@ -66,6 +66,43 @@ done
 ### Ваш скрипт:
 ```bash
 
+root@srv-1:/home/khrom/Netology# bash test_ip
+root@srv-1:/home/khrom/Netology# cat  test_ip.log
+Пн 03 янв 2022 20:15:03 MSK
+         192.168.0.1 test 1 status=28
+         173.194.222.113 test 1 status=0
+         87.250.250.24 test 1 status=28
+Пн 03 янв 2022 20:15:05 MSK
+         192.168.0.1 test 2 status=28
+         173.194.222.113 test 2 status=0
+         87.250.250.24 test 2 status=28
+Пн 03 янв 2022 20:15:07 MSK
+         192.168.0.1 test 3 status=28
+         173.194.222.113 test 3 status=0
+         87.250.250.24 test 3 status=28
+Пн 03 янв 2022 20:15:10 MSK
+         192.168.0.1 test 4 status=28
+         173.194.222.113 test 4 status=0
+         87.250.250.24 test 4 status=28
+Пн 03 янв 2022 20:15:12 MSK
+         192.168.0.1 test 5 status=28
+         173.194.222.113 test 5 status=0
+         87.250.250.24 test 5 status=28
+root@srv-1:/home/khrom/Netology# cat test_ip
+#!/usr/bin/env bash
+IP=(192.168.0.1 173.194.222.113 87.250.250.24)
+timeout=1
+for n in {1..5}
+do
+date >>test_ip.log
+    for ip in ${IP[*]}
+    do
+        curl -Is --connect-timeout 1 $ip:80 >/dev/null
+        echo "         $ip test" $n  status=$? >>test_ip.log
+    done
+done
+root@srv-1:/home/khrom/Netology#
+
 ```
 
 ## Обязательная задача 4
