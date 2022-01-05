@@ -235,8 +235,43 @@ khrom@srv-1:~$
 
  ### Ответ:
   ```bash
- ### Ответ:
+khrom@srv-1:~$ mv ~/.ssh/id_rsa ~/.ssh/ub_virt.key
+khrom@srv-1:~$ touch ~/.ssh/config && chmod 755 ~/.ssh/config
+khrom@srv-1:~$ nano ~/.ssh/config
+
   ```
+
+ ```bash
+Host ub_virt
+    HostName 192.168.99.40
+    IdentityFile ~/.ssh/ub_virt.key
+    User khrom
+ ```
+
+```bash
+khrom@srv-1:~$ ssh ub_virt
+Welcome to Ubuntu 20.04.3 LTS (GNU/Linux 5.11.0-44-generic x86_64)
+
+ * Documentation:  https://help.ubuntu.com
+ * Management:     https://landscape.canonical.com
+ * Support:        https://ubuntu.com/advantage
+
+0 updates can be applied immediately.
+
+Your Hardware Enablement Stack (HWE) is supported until April 2025.
+Last login: Wed Jan  5 12:05:32 2022 from 192.168.99.30
+khrom@ubuntu:~$
+
+
+```
+
 # Задание 7. Соберите дамп трафика утилитой tcpdump в формате pcap, 100 пакетов. Откройте файл pcap в Wireshark.
 
+```bash
+khrom@srv-1:~$ sudo tcpdump -i enp4s0 -c 100 -w 0001.pcap
+[sudo] пароль для khrom:
+tcpdump: listening on enp4s0, link-type EN10MB (Ethernet), capture size 262144 bytes
 
+```
+
+https://drive.google.com/file/d/1Ib0-PrBUxZdfayXM-CJMx8Cih2MmyRP7/view?usp=sharing
