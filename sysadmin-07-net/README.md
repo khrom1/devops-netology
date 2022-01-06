@@ -139,8 +139,33 @@ iface enp4s0.100 inet static
 
 ## Ответ:
 
-```bash
+mode=0 (balance-rr)
 
+mode=1 (active-backup)
+
+mode=2 (balance-xor)
+
+mode=3 (broadcast)
+
+mode=4 (802.3ad)
+
+mode=5 (balance-tlb)
+
+mode=6 (balance-alb)
+
+Все настройки можно сделать через /etc/network/interfaces
+
+```bash
+iface bond0 inet static
+address 10.0.1.5
+netmask 255.255.255.0
+network 10.0.1.0
+gateway 10.0.1.254
+bond_mode balance-tlb
+bond_miimon 100
+bond_downdelay 200
+bond_updelay 200
+slaves eth0 eth1
 
 
 ```
