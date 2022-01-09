@@ -408,7 +408,28 @@ khrom@srv-1:~$ sudo dpkg-reconfigure ca-certificates
 ### Ответ:
 
 ```bash
+khrom@srv-1:~$ sudo apt install nginx
+Чтение списков пакетов… Готово
+Построение дерева зависимостей
 
+khrom@srv-1:~$ systemctl status nginx
+● nginx.service - A high performance web server and a reverse proxy server
+     Loaded: loaded (/lib/systemd/system/nginx.service; enabled; vendor preset: enabled)
+     Active: active (running) since Sun 2022-01-09 15:17:32 MSK; 1min 39s ago
+       Docs: man:nginx(8)
+   Main PID: 9099 (nginx)
+      Tasks: 9 (limit: 4298)
+     Memory: 5.8M
+     CGroup: /system.slice/nginx.service
+             ├─9099 nginx: master process /usr/sbin/nginx -g daemon on; master_process on;
+             ├─9100 nginx: worker process
+             ├─9101 nginx: worker process
+             ├─9102 nginx: worker process
+             ├─9103 nginx: worker process
+             ├─9104 nginx: worker process
+             ├─9105 nginx: worker process
+             ├─9106 nginx: worker process
+             └─9107 nginx: worker process
 
 ```
 # Задание 7. По инструкции ([ссылка](https://nginx.org/en/docs/http/configuring_https_servers.html)) настройте nginx на https, используя ранее подготовленный сертификат:
