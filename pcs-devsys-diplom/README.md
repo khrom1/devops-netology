@@ -255,7 +255,7 @@ See 'snap info jq' for additional versions.
 khrom@ubuntu:~$ sudo apt  install jq
 
 khrom@ubuntu:~$ vault write -format=json pki_int/intermediate/generate/internal \
->      common_name="example.com Intermediate Authority" \
+>      common_name="example.com " \
 >      | jq -r '.data.csr' > pki_intermediate.csr
 khrom@ubuntu:~$ vault write -format=json pki/root/sign-intermediate csr=@pki_intermediate.csr \
 >      format=pem_bundle ttl="43800h" \
@@ -279,110 +279,20 @@ khrom@ubuntu:~$
 
 
 ```
-Запрос сертификата на месяц
+Запрос сертификата на месяц и подготовка сертификатов
 
 ```bash
 
 
 ``````bash
-khrom@ubuntu:~$ vault write pki_int/issue/example-dot-com common_name="test.example.com" ttl="720h"
-Key                 Value
----                 -----
-ca_chain            [-----BEGIN CERTIFICATE-----
-MIIDpjCCAo6gAwIBAgIUH8J2p51WqS3q6HXievWHe2cKL8MwDQYJKoZIhvcNAQEL
-BQAwFjEUMBIGA1UEAxMLZXhhbXBsZS5jb20wHhcNMjIwMTA5MTAyMjQ0WhcNMjcw
-MTA4MTAyMzE0WjAtMSswKQYDVQQDEyJleGFtcGxlLmNvbSBJbnRlcm1lZGlhdGUg
-QXV0aG9yaXR5MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAzkS0t+Kb
-O8DuKGUeXn8Pp0ylQJjjZHFJUNK8ylw4PMaZ8HeT5ImtZRdRO0vfaymDynD3QH9J
-zJ21RGSVN2Dfyu+Q4p0ujV/vvizEXbkBBALeMGoO97klLlyw3ChHpaxYp/txiDmH
-03vkg0k4twOmV7QLYHT3VKvwFI5WZqFbCdxAkc5GfGbA0ejZqpQm5ZIVfUDeOsLd
-fgbQATHxhO/PmUPxCm+BwtmcsQ3HqEQeosZUy542wjwMNW6F7wTaS56/zoTMKDZC
-6gxIQkOPrWg2Y60htxScVq5HaIo8xvnsc+d0kkb52g1Bj5nB5J5eXRVOmUlNxCp/
-YsQJxn7wHV7hFwIDAQABo4HUMIHRMA4GA1UdDwEB/wQEAwIBBjAPBgNVHRMBAf8E
-BTADAQH/MB0GA1UdDgQWBBRvu93MyEFNy04TOVj9qvlbGMIk5jAfBgNVHSMEGDAW
-gBR4sIg1gfXsBHcgcoMTXDpPeIs2ojA7BggrBgEFBQcBAQQvMC0wKwYIKwYBBQUH
-MAKGH2h0dHA6Ly8xMjcuMC4wLjE6ODIwMC92MS9wa2kvY2EwMQYDVR0fBCowKDAm
-oCSgIoYgaHR0cDovLzEyNy4wLjAuMTo4MjAwL3YxL3BraS9jcmwwDQYJKoZIhvcN
-AQELBQADggEBABn4cXi5hYVilvYkjMNFVSbbsVabAps8Eq9PirTiEuZbnm0v30Rv
-c3VDMTLXTGYNDYOHvQb8giLF6pdnCkgqN9EebhHod+ZWqiyCC3l7RSe3eX9vi57D
-f7PAFoYj4GbMhTgXzWb15BcWgc5EvTlzIiYaKGbKDxNtB2qFCIogpuE5UCF6rPQ8
-CvC0TuNvywPdctkljAJO/hDPqJoq+DDw/aQwXHLzyQtNABvm2M5iOCcpxo/Li6FK
-barmddM2Qkki/qoTuxsfSXLkm3PTKjMUVo/JYoFhhuLf5LwR4v85+SEL2aOX3vCT
-ueza0fdfQzWGrumpoRh0//evegSCKIHr37E=
------END CERTIFICATE-----]
-certificate         -----BEGIN CERTIFICATE-----
-MIIDZjCCAk6gAwIBAgIURaFFJdyMAC7JzHNtPDLHm9ft29swDQYJKoZIhvcNAQEL
-BQAwLTErMCkGA1UEAxMiZXhhbXBsZS5jb20gSW50ZXJtZWRpYXRlIEF1dGhvcml0
-eTAeFw0yMjAxMDkxMDI4MTBaFw0yMjAyMDgxMDI4NDBaMBsxGTAXBgNVBAMTEHRl
-c3QuZXhhbXBsZS5jb20wggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQC9
-ZK+OFUIh0GukyXiH5Jqi6rhW5+Ah5w23Q5WuAvW2g4OYghO9bL336i6WwvznkoOL
-KeI9k69NpyioNR0MFDrh05FTNLBBFM8Q6sN2/2uh+JofbizeXNdWQ/A8V/3b3cKn
-b6zGSRzMNILe1k1Cs5PaK/9+eZxFJo4ithHRu9Qeor4MiJpCE/mV75lw+mTylUsh
-Czu6+vSUkbLfpFwBIK/LHzgtxMoU/1fQ+W5BnEZ3341c/0Q97pXW9XWRpeSIfRfb
-2cJgFuguHk5x8xStaNRRokftmJ16DL9nOSWJCjq5Y3v+AN/HMahkBC37vevCJyFT
-iet0w9HUtI+2QI1l0Ao7AgMBAAGjgY8wgYwwDgYDVR0PAQH/BAQDAgOoMB0GA1Ud
-JQQWMBQGCCsGAQUFBwMBBggrBgEFBQcDAjAdBgNVHQ4EFgQUAOjWxyiZ9ntNMskU
-GkSczjar4SAwHwYDVR0jBBgwFoAUb7vdzMhBTctOEzlY/ar5WxjCJOYwGwYDVR0R
-BBQwEoIQdGVzdC5leGFtcGxlLmNvbTANBgkqhkiG9w0BAQsFAAOCAQEAZ5LFXEUH
-r/aNBHA3OPGJMUBf4yemedXH7bNuXl30hDJlOx9EKV2x8VliKNqyaXjqNuku/Ctz
-1x5x6z/D69GuQ6dLTDEXEfac1idMFqBF5QHzl+0vvU0VoBCK1wD+Pdx3/c+jvxYu
-wlR81S+ViV2an6cZ/EF9RGYEWzk2bNcRtYlqSp6MtGo7mpbsRe+/Eb+T6MvzfNu9
-oK4tUff0X1Qrp8rg5f/c8BFdSEaUSJChs4ncw+zjJZ5MiF9bBhS8C38Se9MYeF/g
-1E2DZSKEEIxVJGg/r/t17wfAJEdmtcrdNlJtr8DndGCX6AUArrmpWAZNudmGnLKh
-PtVD8SnoHWhGDA==
------END CERTIFICATE-----
-expiration          1644316120
-issuing_ca          -----BEGIN CERTIFICATE-----
-MIIDpjCCAo6gAwIBAgIUH8J2p51WqS3q6HXievWHe2cKL8MwDQYJKoZIhvcNAQEL
-BQAwFjEUMBIGA1UEAxMLZXhhbXBsZS5jb20wHhcNMjIwMTA5MTAyMjQ0WhcNMjcw
-MTA4MTAyMzE0WjAtMSswKQYDVQQDEyJleGFtcGxlLmNvbSBJbnRlcm1lZGlhdGUg
-QXV0aG9yaXR5MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAzkS0t+Kb
-O8DuKGUeXn8Pp0ylQJjjZHFJUNK8ylw4PMaZ8HeT5ImtZRdRO0vfaymDynD3QH9J
-zJ21RGSVN2Dfyu+Q4p0ujV/vvizEXbkBBALeMGoO97klLlyw3ChHpaxYp/txiDmH
-03vkg0k4twOmV7QLYHT3VKvwFI5WZqFbCdxAkc5GfGbA0ejZqpQm5ZIVfUDeOsLd
-fgbQATHxhO/PmUPxCm+BwtmcsQ3HqEQeosZUy542wjwMNW6F7wTaS56/zoTMKDZC
-6gxIQkOPrWg2Y60htxScVq5HaIo8xvnsc+d0kkb52g1Bj5nB5J5eXRVOmUlNxCp/
-YsQJxn7wHV7hFwIDAQABo4HUMIHRMA4GA1UdDwEB/wQEAwIBBjAPBgNVHRMBAf8E
-BTADAQH/MB0GA1UdDgQWBBRvu93MyEFNy04TOVj9qvlbGMIk5jAfBgNVHSMEGDAW
-gBR4sIg1gfXsBHcgcoMTXDpPeIs2ojA7BggrBgEFBQcBAQQvMC0wKwYIKwYBBQUH
-MAKGH2h0dHA6Ly8xMjcuMC4wLjE6ODIwMC92MS9wa2kvY2EwMQYDVR0fBCowKDAm
-oCSgIoYgaHR0cDovLzEyNy4wLjAuMTo4MjAwL3YxL3BraS9jcmwwDQYJKoZIhvcN
-AQELBQADggEBABn4cXi5hYVilvYkjMNFVSbbsVabAps8Eq9PirTiEuZbnm0v30Rv
-c3VDMTLXTGYNDYOHvQb8giLF6pdnCkgqN9EebhHod+ZWqiyCC3l7RSe3eX9vi57D
-f7PAFoYj4GbMhTgXzWb15BcWgc5EvTlzIiYaKGbKDxNtB2qFCIogpuE5UCF6rPQ8
-CvC0TuNvywPdctkljAJO/hDPqJoq+DDw/aQwXHLzyQtNABvm2M5iOCcpxo/Li6FK
-barmddM2Qkki/qoTuxsfSXLkm3PTKjMUVo/JYoFhhuLf5LwR4v85+SEL2aOX3vCT
-ueza0fdfQzWGrumpoRh0//evegSCKIHr37E=
------END CERTIFICATE-----
-private_key         -----BEGIN RSA PRIVATE KEY-----
-MIIEowIBAAKCAQEAvWSvjhVCIdBrpMl4h+Saouq4VufgIecNt0OVrgL1toODmIIT
-vWy99+oulsL855KDiyniPZOvTacoqDUdDBQ64dORUzSwQRTPEOrDdv9rofiaH24s
-3lzXVkPwPFf9293Cp2+sxkkczDSC3tZNQrOT2iv/fnmcRSaOIrYR0bvUHqK+DIia
-QhP5le+ZcPpk8pVLIQs7uvr0lJGy36RcASCvyx84LcTKFP9X0PluQZxGd9+NXP9E
-Pe6V1vV1kaXkiH0X29nCYBboLh5OcfMUrWjUUaJH7Zidegy/ZzkliQo6uWN7/gDf
-xzGoZAQt+73rwichU4nrdMPR1LSPtkCNZdAKOwIDAQABAoIBAHF+abmCQbwTsr3w
-QbtlockpUUg68dQ/Krf81zCM84Po8a4tnPixtnFfM4YC2R1Ibm2xrrLp0m59Ul7i
-XULEyLhVWUv8UfbeKmvf0zx3OZ+5Y1qcYmTqS9yVH9x5elYMYT6HLIkyfQBeI2K4
-F1p2VI60OQoohB3oSdrBMpJ1tVqZb7kfSP9JdWiHBkOjgdsl4DpLCOJICVp4de3b
-zY03qmI6cFtlRm5aFK5axea4ZHmoNJTldpJgAXik+z+jZClfNd3mTPG7DTWDvdW6
-FJFqs+XpqFxx0jQ70aMCK2gMc8yoIiNlUCVdCeUTqzK+lcBWp+CQvPmHwzERyGRj
-4BjRUUkCgYEA+dSDcgTIl/cF4eOnEdF5+K16zlhQf5FQdYVUncPHVCzWJw6pVkL/
-fH4dsxjgv0zc9ab4rsPk+HOMWgzQILEkKb00LuOeUVEUF8BbKWMoTdU506AYnRDi
-OWdm41gjb5cJjcHMOi7SHLChmOvC3HJOShjuN28skaNY2viUsoDU7K0CgYEAwhIT
-eJHCA1TE3pLmeDITeKy1vOVL7AsSWy+NU7VGRj6zHl49tUgAAaZCXN9pLB4eYRrp
-biOG8kzcN8kUSqAOJg9/K5g2tR5V9L5HaFL8K6qlfdNXtpUMXqyqmp6EYOo6SOWt
-LtSq+3jkIphoQQkKbORCsJ+8IKhTuXI0h/6Yh4cCgYBmYktELOWwMZH9kvhi+wAL
-g7zyV4sV3I2mu++DgDpuKrnQ49dN/MMLV/v/69AfVfavza/Yn3t0vpXkSZ/55d62
-JE4AcVPua1XargAuI+7ehuXd7pxnsgWkFNY7kWFkV/eYWrXBmnKNQ23WZ7hB865V
-+4WUvkD7pn/BrWHzDY01OQKBgQCh2K9SSsRxQL2aHQqFTMW+StKZgORrKuSZFTQY
-jkHYDSwV9GQkDbKrrXsEtvCf8VJGi0oHJyvAYGb7Qv9gKNED3sKgmaVuMKlgnVsx
-3psc04iGQb2RsAWL4xW4MuCVbmFDL//Y4VTiuXQQgefX7PE71LTlVaFv3tFMA7lZ
-fPK5ewKBgEX7HNKy4yaMM4jYXw9YvD8YM6Hrv4hoCRbVrpkjSFW9SxqX4TaBlg+8
-qDlheCzvvqVHZ8bKMG6bKixDpGiUrE4wZuEx+WE48CstcZxB576yJO5u0AvqQfSA
-Iq+xelSEstdRYj5pJ5nm48456aUZ/Ls8SqH6OIu2vL2yWan6H4G4
------END RSA PRIVATE KEY-----
-private_key_type    rsa
-serial_number       45:a1:45:25:dc:8c:00:2e:c9:cc:73:6d:3c:32:c7:9b:d7:ed:db:db
+root@ubuntu:/home/khrom# vault write -format=json pki_int/issue/example-dot-com common_name="test.example.com" ttl="730h" > /etc/ssl/test_example.crt
+
+
+root@ubuntu:/home/khrom# cat /etc/ssl/test_example.crt | jq -r .data.certificate > /etc/ssl/test_example.crt.pem
+root@ubuntu:/home/khrom# cat /etc/ssl/test_example.crt | jq -r .data.ca_chain[] >> /etc/ssl/test_example.crt.pem
+
+
+root@ubuntu:/home/khrom# cat /etc/ssl/test_example.crt| jq -r .data.private_key > test_example.crt.key
 
 
 ``````bash
@@ -396,7 +306,6 @@ serial_number       45:a1:45:25:dc:8c:00:2e:c9:cc:73:6d:3c:32:c7:9b:d7:ed:db:db
 ### Ответ:
 
 ```bash
-khrom@srv-1:/usr/local/share/ca-certificates$ cd
 khrom@srv-1:~$ cd /usr/local/share/ca-certificates
 khrom@srv-1:/usr/local/share/ca-certificates$ sudo scp khrom@192.168.99.40:/home/khrom/CA_cert.crt .
 khrom@srv-1:~$ sudo dpkg-reconfigure ca-certificates
@@ -408,28 +317,25 @@ khrom@srv-1:~$ sudo dpkg-reconfigure ca-certificates
 ### Ответ:
 
 ```bash
-khrom@srv-1:~$ sudo apt install nginx
+root@ubuntu:/home/khrom# apt install nginx
 Чтение списков пакетов… Готово
-Построение дерева зависимостей
+...
 
-khrom@srv-1:~$ systemctl status nginx
+root@ubuntu:~# systemctl status nginx
 ● nginx.service - A high performance web server and a reverse proxy server
      Loaded: loaded (/lib/systemd/system/nginx.service; enabled; vendor preset: enabled)
-     Active: active (running) since Sun 2022-01-09 15:17:32 MSK; 1min 39s ago
+     Active: active (running) since Sat 2022-01-15 02:43:03 MSK; 55min ago
        Docs: man:nginx(8)
-   Main PID: 9099 (nginx)
-      Tasks: 9 (limit: 4298)
-     Memory: 5.8M
+    Process: 10148 ExecStartPre=/usr/sbin/nginx -t -q -g daemon on; master_process on; (code=exited, status=0/SUCCESS)
+    Process: 10149 ExecStart=/usr/sbin/nginx -g daemon on; master_process on; (code=exited, status=0/SUCCESS)
+   Main PID: 10150 (nginx)
+      Tasks: 3 (limit: 4599)
+     Memory: 3.3M
      CGroup: /system.slice/nginx.service
-             ├─9099 nginx: master process /usr/sbin/nginx -g daemon on; master_process on;
-             ├─9100 nginx: worker process
-             ├─9101 nginx: worker process
-             ├─9102 nginx: worker process
-             ├─9103 nginx: worker process
-             ├─9104 nginx: worker process
-             ├─9105 nginx: worker process
-             ├─9106 nginx: worker process
-             └─9107 nginx: worker process
+             ├─10150 nginx: master process /usr/sbin/nginx -g daemon on; master_process on;
+             ├─10151 nginx: worker process
+             └─10152 nginx: worker process
+
 
 ```
 # Задание 7. По инструкции ([ссылка](https://nginx.org/en/docs/http/configuring_https_servers.html)) настройте nginx на https, используя ранее подготовленный сертификат:
@@ -440,6 +346,45 @@ khrom@srv-1:~$ systemctl status nginx
 ### Ответ:
 
 ```bash
+root@ubuntu:/home/khrom# mkdir -p /var/www/example/html
+root@ubuntu:/home/khrom# chown -R $USER:$USER /var/www/example/html
+root@ubuntu:/home/khrom# sudo chmod -R 755 /var/www/example
+
+
+root@ubuntu:/home/khrom# nano /etc/nginx/sites-available/example
+
+
+
+
+root@ubuntu:/home/khrom# ln -s /etc/nginx/sites-available/example /etc/nginx/sites-enabled/
+
+
+server {
+
+      listen              443 ssl;
+
+      server_name         www.test.example.com test.example.com;
+      ssl_certificate     /etc/ssl/test_example.crt.pem;
+      ssl_certificate_key /home/khrom/test.example.com.crt.key;
+
+       root /var/www/example/html;
+       index index.html;
+
+       location / {
+               try_files $uri $uri/ =404;
+       }
+}
+
+```
+
+```bash
+
+root@ubuntu:/home/khrom# nginx -t
+nginx: the configuration file /etc/nginx/nginx.conf syntax is ok
+nginx: configuration file /etc/nginx/nginx.conf test is successful
+
+root@ubuntu:/home/khrom# systemctl restart nginx
+
 
 
 ```
@@ -448,10 +393,8 @@ khrom@srv-1:~$ systemctl status nginx
 
 ### Ответ:
 
-```bash
+![](../../../Desktop/2022-01-15_024845.png)
 
-
-```
 # Задание 9. Создайте скрипт, который будет генерировать новый сертификат в vault:
   - генерируем новый сертификат так, чтобы не переписывать конфиг nginx;
   - перезапускаем nginx для применения нового сертификата.
