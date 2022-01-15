@@ -285,14 +285,12 @@ khrom@ubuntu:~$
 
 
 ``````bash
-root@ubuntu:/home/khrom# vault write -format=json pki_int/issue/example-dot-com common_name="test.example.com" ttl="730h" > /etc/ssl/test_example.crt
+root@ubuntu:/home/khrom# vault write -format=json pki_int/issue/example-dot-com common_name="test.example.com" ttl="720h" > /etc/ssl/test_example.crt
 
 
 root@ubuntu:/home/khrom# cat /etc/ssl/test_example.crt | jq -r .data.certificate > /etc/ssl/test_example.crt.pem
 root@ubuntu:/home/khrom# cat /etc/ssl/test_example.crt | jq -r .data.ca_chain[] >> /etc/ssl/test_example.crt.pem
-
-
-root@ubuntu:/home/khrom# cat /etc/ssl/test_example.crt| jq -r .data.private_key > test_example.crt.key
+root@ubuntu:/home/khrom# cat /etc/ssl/test_example.crt | jq -r .data.private_key > /etc/ssl/test.example.com.crt.key
 
 
 ``````bash
@@ -353,19 +351,13 @@ root@ubuntu:/home/khrom# sudo chmod -R 755 /var/www/example
 
 root@ubuntu:/home/khrom# nano /etc/nginx/sites-available/example
 
-
-
-
-root@ubuntu:/home/khrom# ln -s /etc/nginx/sites-available/example /etc/nginx/sites-enabled/
-
-
 server {
 
       listen              443 ssl;
 
       server_name         www.test.example.com test.example.com;
       ssl_certificate     /etc/ssl/test_example.crt.pem;
-      ssl_certificate_key /home/khrom/test.example.com.crt.key;
+      ssl_certificate_key /etc/ssl/test.example.com.crt.key;
 
        root /var/www/example/html;
        index index.html;
@@ -374,6 +366,15 @@ server {
                try_files $uri $uri/ =404;
        }
 }
+
+
+
+
+
+
+root@ubuntu:/home/khrom# ln -s /etc/nginx/sites-available/example /etc/nginx/sites-enabled/
+
+
 
 ```
 
@@ -404,6 +405,22 @@ root@ubuntu:/home/khrom# systemctl restart nginx
 
 ```bash
 
+#!/usr/bin/env bash
+
+#Генерация сертификата
+
+ vault write -format=json pki_int/issue/example-dot-com common_name="test.example.com" ttl="720h" > /etc/ssl/test_example.crt
+
+# Подготовка сертификата
+
+ cat /etc/ssl/test_example.crt | jq -r .data.certificate > /etc/ssl/test_example.crt.pem
+ cat /etc/ssl/test_example.crt | jq -r .data.ca_chain[] >> /etc/ssl/test_example.crt.pem
+ cat /etc/ssl/test_example.crt | jq -r .data.private_key > /etc/ssl/test.example.com.crt.key
+
+# Перезапускаем nginx для применения нового сертификата.
+
+ systemctl restart nginx
+
 
 ```
 # Задание 10. Поместите скрипт в crontab, чтобы сертификат обновлялся какого-то числа каждого месяца в удобное для вас время.
@@ -412,6 +429,34 @@ root@ubuntu:/home/khrom# systemctl restart nginx
 ### Ответ:
 
 ```bash
+
+root@ubuntu:/home/khrom# crontab -l
+# Edit this file to introduce tasks to be run by cron.
+#
+# Each task to run has to be defined through a single line
+# indicating with different fields when the task will be run
+# and what command to run for the task
+#
+# To define the time you can provide concrete values for
+# minute (m), hour (h), day of month (dom), month (mon),
+# and day of week (dow) or use '*' in these fields (for 'any').
+#
+# Notice that tasks will be started based on the cron's system
+# daemon's notion of time and timezones.
+#
+# Output of the crontab jobs (including errors) is sent through
+# email to the user the crontab file belongs to (unless redirected).
+#
+# For example, you can run a backup of all your user accounts
+# at 5 a.m every week with:
+# 0 5 * * 1 tar -zcf /var/backups/home.tgz /home/
+#
+# For more information see the manual pages of crontab(5) and cron(8)
+#
+# m h  dom mon dow   command
+
+
+0 0 1 * * /home/khrom/sert.sh
 
 
 ```
