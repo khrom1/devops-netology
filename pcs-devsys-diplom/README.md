@@ -456,7 +456,8 @@ root@ubuntu:/home/khrom# crontab -l
 # m h  dom mon dow   command
 
 
-0 0 1 * * /home/khrom/sert.sh
+42 2 16 * * /home/khrom/sert.sh
+
 
 
 ```
