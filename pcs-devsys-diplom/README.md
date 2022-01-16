@@ -243,7 +243,7 @@ Success! Enabled the pki secrets engine at: pki_int/
 khrom@ubuntu:~$ vault secrets tune -max-lease-ttl=43800h pki_int
 Success! Tuned the secrets engine at: pki_int/
 khrom@ubuntu:~$ vault write -format=json pki_int/intermediate/generate/internal \
->      common_name="example.com Intermediate Authority" \
+>      common_name="example.com " \
 >      | jq -r '.data.csr' > pki_intermediate.csr
 
 Command 'jq' not found, but can be installed with:
@@ -433,39 +433,108 @@ export VAULT_TOKEN=root
 
 ### Ответ:
 
+
+Запускать скрипт в 00.01 1го числа каждого месяца
+
 ```bash
-
-root@ubuntu:/home/khrom# crontab -l
-# Edit this file to introduce tasks to be run by cron.
-#
-# Each task to run has to be defined through a single line
-# indicating with different fields when the task will be run
-# and what command to run for the task
-#
-# To define the time you can provide concrete values for
-# minute (m), hour (h), day of month (dom), month (mon),
-# and day of week (dow) or use '*' in these fields (for 'any').
-#
-# Notice that tasks will be started based on the cron's system
-# daemon's notion of time and timezones.
-#
-# Output of the crontab jobs (including errors) is sent through
-# email to the user the crontab file belongs to (unless redirected).
-#
-# For example, you can run a backup of all your user accounts
-# at 5 a.m every week with:
-# 0 5 * * 1 tar -zcf /var/backups/home.tgz /home/
-#
-# For more information see the manual pages of crontab(5) and cron(8)
-#
-# m h  dom mon dow   command
+root@ubuntu:~# nano  /etc/crontab
 
 
-42 2 16 * * /home/khrom/sert.sh
+
+ GNU nano 4.8                                                                           /etc/crontab   
 
 
+
+# /etc/crontab: system-wide crontab
+# Unlike any other crontab you don't have to run the `crontab'
+# command to install the new version when you edit this file
+# and files in /etc/cron.d. These files also have username fields,
+# that none of the other crontabs do.
+
+SHELL=/bin/sh
+PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
+
+# Example of job definition:
+# .---------------- minute (0 - 59)
+# |  .------------- hour (0 - 23)
+# |  |  .---------- day of month (1 - 31)
+# |  |  |  .------- month (1 - 12) OR jan,feb,mar,apr ...
+# |  |  |  |  .---- day of week (0 - 6) (Sunday=0 or 7) OR sun,mon,tue,wed,thu,fri,sat
+# |  |  |  |  |
+# *  *  *  *  * user-name command to be executed
+17 *    * * *   root    cd / && run-parts --report /etc/cron.hourly
+25 6    * * *   root    test -x /usr/sbin/anacron || ( cd / && run-parts --report /etc/cron.daily )
+47 6    * * 7   root    test -x /usr/sbin/anacron || ( cd / && run-parts --report /etc/cron.weekly )
+52 6    1 * *   root    test -x /usr/sbin/anacron || ( cd / && run-parts --report /etc/cron.monthly )
+1 0 1 * *       root   bash /home/khrom/sert.sh
+#
 
 ```
 
 
 
+
+Демонстрация работы скрипта каждую минуту
+
+```bash
+
+root@ubuntu:~# nano  /etc/crontab
+
+
+ GNU nano 4.8                                                                           /etc/crontab   
+
+
+
+# /etc/crontab: system-wide crontab
+# Unlike any other crontab you don't have to run the `crontab'
+# command to install the new version when you edit this file
+# and files in /etc/cron.d. These files also have username fields,
+# that none of the other crontabs do.
+
+SHELL=/bin/sh
+PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
+
+# Example of job definition:
+# .---------------- minute (0 - 59)
+# |  .------------- hour (0 - 23)
+# |  |  .---------- day of month (1 - 31)
+# |  |  |  .------- month (1 - 12) OR jan,feb,mar,apr ...
+# |  |  |  |  .---- day of week (0 - 6) (Sunday=0 or 7) OR sun,mon,tue,wed,thu,fri,sat
+# |  |  |  |  |
+# *  *  *  *  * user-name command to be executed
+17 *    * * *   root    cd / && run-parts --report /etc/cron.hourly
+25 6    * * *   root    test -x /usr/sbin/anacron || ( cd / && run-parts --report /etc/cron.daily )
+47 6    * * 7   root    test -x /usr/sbin/anacron || ( cd / && run-parts --report /etc/cron.weekly )
+52 6    1 * *   root    test -x /usr/sbin/anacron || ( cd / && run-parts --report /etc/cron.monthly )
+*/1 * * * *     root   bash /home/khrom/sert.sh
+#
+
+
+
+
+```
+Лог 
+
+```bash
+root@ubuntu:~# grep CRON /var/log/syslog
+
+Jan 16 23:18:01 ubuntu CRON[8773]: (root) CMD (  bash /home/khrom/sert.sh)
+Jan 16 23:19:01 ubuntu CRON[8797]: (root) CMD (  bash /home/khrom/sert.sh)
+Jan 16 23:20:01 ubuntu CRON[8821]: (root) CMD (  bash /home/khrom/sert.sh)
+Jan 16 23:21:01 ubuntu CRON[8848]: (root) CMD (  bash /home/khrom/sert.sh)
+Jan 16 23:22:01 ubuntu CRON[8871]: (root) CMD (  bash /home/khrom/sert.sh)
+Jan 16 23:23:01 ubuntu CRON[8894]: (root) CMD (  bash /home/khrom/sert.sh)
+Jan 16 23:24:01 ubuntu CRON[8919]: (root) CMD (  bash /home/khrom/sert.sh)
+Jan 16 23:25:01 ubuntu CRON[8944]: (root) CMD (  bash /home/khrom/sert.sh)
+Jan 16 23:26:01 ubuntu CRON[8979]: (root) CMD (  bash /home/khrom/sert.sh)
+root@ubuntu:~#
+
+
+```
+
+![](im/2022-01-16_232224.png)
+
+
+![](im/2022-01-16_232326.png)
+
+![](im/2022-01-16_232446.png)
