@@ -407,6 +407,10 @@ root@ubuntu:/home/khrom# systemctl restart nginx
 
 #!/usr/bin/env bash
 
+export VAULT_ADDR=http://127.0.0.1:8200
+export VAULT_TOKEN=root
+
+
 #Генерация сертификата
 
  vault write -format=json pki_int/issue/example-dot-com common_name="test.example.com" ttl="720h" > /etc/ssl/test_example.crt
