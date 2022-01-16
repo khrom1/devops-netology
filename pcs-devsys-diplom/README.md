@@ -198,6 +198,7 @@ Other commands:
 Запуск сервера
 
 ```bash
+
 khrom@ubuntu:~$ vault server -dev -dev-root-token-id root
 ==> Vault server configuration:
 
