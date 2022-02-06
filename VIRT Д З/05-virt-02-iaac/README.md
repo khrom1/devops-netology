@@ -33,17 +33,17 @@ Ansible использует протокол SSH , что способству�
 
  ### VirtualBox
 
-![](C:\Users\khrom1\git\devops-netology\VIRT Д З\05-virt-02-iaac\im\2022-02-06_225419.png)
+![](\im\2022-02-06_225419.png)
 
 
  ### Vagrant
 
-![](C:\Users\khrom1\git\devops-netology\VIRT Д З\05-virt-02-iaac\im\2022-02-06_233725.png)
+![](\im\2022-02-06_233725.png)
 
 
  ### Ansible
 
-![](C:\Users\khrom1\git\devops-netology\VIRT Д З\05-virt-02-iaac\im\2022-02-06_234814.png)
+![](\im\2022-02-06_234814.png)
 
 
 
