@@ -129,7 +129,7 @@ https://hub.docker.com/repository/docker/khrom1/nginx
 - Добавьте еще один файл в папку ```/data``` на хостовой машине;
 - Подключитесь во второй контейнер и отобразите листинг и содержание файлов в ```/data``` контейнера.
 
-```
+``` 
 root@ubuntu:/home/khrom# docker pull centos
 Using default tag: latest
 latest: Pulling from library/centos
@@ -152,15 +152,36 @@ nginx          latest    c316d5a335a5   3 weeks ago    142MB
 debian         latest    04fbdaf87a6a   3 weeks ago    124MB
 centos         latest    5d0da3dc9764   5 months ago   231MB
 
-root@ubuntu:/home/khrom# docker run --name CEN -d -v /home/khrom/data:/data 5d0da3dc9764
-98006c48307e021fd911f3b45012bd70f8c8116de89881fb30f75c96f4415c2d
+root@ubuntu:/home/khrom# docker run -it --name CEN  -d -v ~/home/khrom/data:/home/data centos
+f5f083998e6a750e10e024e6f2319ce0dcff1d38ebf04d0be3ff640d93585640
+root@ubuntu:/home/khrom# docker run -it --name DEB  -d -v ~/home/khrom/data:/home/data debian
+2377e3cfdcf61f47288627b5adcae9518e64333e7fc8154d0391ccaf106611f8
+root@ubuntu:/home/khrom# docker start  CEN
+CEN
+root@ubuntu:/home/khrom# docker start  DEB
+DEB
+root@ubuntu:/home/khrom# docker ps
+CONTAINER ID   IMAGE     COMMAND       CREATED              STATUS              PORTS     NAMES
+2377e3cfdcf6   debian    "bash"        About a minute ago   Up About a minute             DEB
+f5f083998e6a   centos    "/bin/bash"   2 minutes ago        Up 24 seconds                 CEN
 
-root@ubuntu:/home/khrom# docker run --name DEB -d -v /home/khrom/data:/data 04fbdaf87a6a
-64212db6b9932649d0b9c5ea271e098edb762497e9e735496ad7ce4977bb5c3a
+root@ubuntu:/home/khrom# docker exec -it  CEN bash
+[root@f5f083998e6a ~]# cd /home/data
+[root@f5f083998e6a data]# echo "Test CEN" > CEN.txt
+[root@f5f083998e6a data]# ls
+CEN.txt
+root@ubuntu:~/home/khrom/data# ls
+CEN.txt
 
 
+root@ubuntu:~/home/khrom/data# echo "Test Host" > Host.txt
+root@ubuntu:~/home/khrom/data# ls
+CEN.txt  Host.txt
 
-
+root@ubuntu:~# docker exec -it  DEB  bash
+root@2377e3cfdcf6:/#  cd /home/data
+root@2377e3cfdcf6:/home/data# ls
+CEN.txt  Host.txt
 
 
 ```
