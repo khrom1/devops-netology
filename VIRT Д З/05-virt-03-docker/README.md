@@ -24,15 +24,18 @@ Hey, Netology
 Опубликуйте созданный форк в своем репозитории и предоставьте ответ в виде ссылки на https://hub.docker.com/username_repo.
 
 #Загрузил и запустил контейнер 
-
+```
 khrom@ubuntu:~$ sudo docker run  -d --name nginx-khrom  -p 8080:80 nginx
+
 2fb38782705c47d1a12ce907430ce86bc65691f8502391ff74c5de684fb08ade
+
 khrom@ubuntu:~$  sudo docker ps
+
 CONTAINER ID   IMAGE     COMMAND                  CREATED          STATUS          PORTS                                   NAMES
 2fb38782705c   nginx     "/docker-entrypoint.…"   21 seconds ago   Up 20 seconds   0.0.0.0:8080->80/tcp, :::8080->80/tcp   nginx-khrom
-
+```
 #Зашёл в контейнер
-
+```
 khrom@ubuntu:~$ docker exec -it  nginx-khrom bash
 
 
@@ -68,7 +71,7 @@ The push refers to repository [docker.io/khrom1/nginx]
 7d0ebbe3f5d2: Mounted from library/nginx
 v1.0: digest: sha256:50dd515fe438c0d734bc49eb4cb0cc7f55f457e4776fa407bc5d3b0213a95f28 size: 1782
 
-
+```
 https://hub.docker.com/repository/docker/khrom1/nginx
 
 
