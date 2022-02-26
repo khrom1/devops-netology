@@ -128,7 +128,7 @@ khrom@ubuntu:~/netology$ yc compute image list
 
 
 
-###
+##
 
 ```
 
