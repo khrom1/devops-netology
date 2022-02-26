@@ -111,7 +111,7 @@ khrom@ubuntu:~/netology$ yc compute image list
 ```
 
 
-
+![](im/Dz 5.3.jpg)
 
 ![](im/Dz 5.3.png)
 
