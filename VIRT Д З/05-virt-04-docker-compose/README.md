@@ -112,7 +112,9 @@ khrom@ubuntu:~/netology$ yc compute image list
 
 ![](im/2022-02-26_212323.png)
 
-![](im/DZ 5.3.1png.png)
+
+
+![](im/Dz 5.3.png)
 
 
 ## Задача 2
