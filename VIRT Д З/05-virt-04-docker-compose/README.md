@@ -136,47 +136,64 @@ khrom@ubuntu:~/netology$ yc compute image list
 
 
 
-##
+## Установка terraform
+
+```
+curl -fsSL https://apt.releases.hashicorp.com/gpg | sudo apt-key add - && \
+sudo apt-add-repository "deb [arch=amd64] https://apt.releases.hashicorp.com $(lsb_release -cs) main" && \
+sudo apt-get update && sudo apt-get install terraform
+```
+
+### Проверка версии
+
+```
+khrom@ubuntu:~/netology$ cd terraform/
+khrom@ubuntu:~/netology/terraform$ terraform -version
+Terraform v1.1.6
+on linux_amd64
+
+```
+
+### 
+
+```
+khrom@ubuntu:~/netology/terraform$ terraform init
+
+Initializing the backend...
+
+Initializing provider plugins...
+- Finding latest version of yandex-cloud/yandex...
+- Installing yandex-cloud/yandex v0.71.0...
+- Installed yandex-cloud/yandex v0.71.0 (self-signed, key ID
+```
+
+### Выпуск ключей авторизации
+
+
+```
+
+khrom@ubuntu:~$ ssh-keygen -t rsa
 
 ```
 
 ```
-
-###
-
-```
-
-```
-
-###
-
-
-###
+khrom@ubuntu:~/netology/terraform$ yc iam key create --service-account-name khrom -o khromkey.json
+id: ajek980p1rdpit4ijmrt
+service_account_id: aje761vbjs2qevlj34tf
+created_at: "2022-02-27T00:13:21.614334759Z"
+key_algorithm: RSA_2048
 
 ```
 
-```
-
-###
+### Установка ВМ
 
 ```
+khrom@ubuntu:~/netology/terraform$ terraform apply -auto-approve
 
-```
-
-###
-
-
-###
 
 ```
 
-```
-
-###
-
-```
-
-```
+![](im/2022-02-27_005641.png)
 
 
 ## Задача 3
@@ -188,6 +205,24 @@ khrom@ubuntu:~/netology$ yc compute image list
 <p align="center">
   <img width="1200" height="600" src="./assets/yc_02.png">
 </p>
+
+### Редактируем inventory файл 
+
+[manager]
+node01.netology.cloud ansible_host=51.250.2.211
+
+### Убираем права доступа 
+
+khrom@ubuntu:~$ sudo chmod 755 ~/netology/ansible/
+
+
+### Создаём компанент
+
+khrom@ubuntu:~/netology/ansible$ ansible-playbook provision.yml
+
+
+![](im/2022-02-27_040552.png)
+
 
 ## Задача 4 (*)
 
