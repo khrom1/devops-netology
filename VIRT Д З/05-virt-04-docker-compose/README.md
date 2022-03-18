@@ -51,7 +51,7 @@ labels:
   my-label: netology-khrom
 
 khrom@ubuntu:~/netology$ yc vpc subnet create --name my-subnet-a --zone ru-central1-a --range 10.1.2.0/24 \
-> --network-name net --description "subnet khrom"
+>св
 id: e9botm5o848bo23ttidm
 folder_id: b1g0nmleb1hnugk4kb9g
 created_at: "2022-02-26T17:22:21Z"
