@@ -310,7 +310,7 @@ secure-file-priv= NULL
 innodb_flush_log_at_trx_commit  = 0
 innodb_file_format = Barracuda
 innobd_log_buffer_size  = 1M
-innodb_buffer_pool_size = 640М
+innodb_buffer_pool_size = 610М
 innodb_log_file_size = 100M
 # Custom config should go here
 !includedir /etc/mysql/conf.d/
