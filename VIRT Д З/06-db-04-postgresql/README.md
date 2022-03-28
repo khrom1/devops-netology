@@ -38,7 +38,7 @@ postgres=#
 ```
 
 **Найдите и приведите** управляющие команды для:
-- вывода списка БД  \l
+- вывода списка БД  `\l`
 
 ```
 postgres=# \l
@@ -58,7 +58,7 @@ es
 es
 (3 rows)
 ```
-- подключения к БД  \connect
+- подключения к БД  `\connect`
 
 ```
 template1-# \connect postgres
@@ -68,7 +68,7 @@ You are now connected to database "postgres" as user "postgres".
 
 ```
 
-- вывода списка таблиц  \dt
+- вывода списка таблиц  `\dt`
 
 ```
 test_database=# \dt
@@ -79,7 +79,7 @@ test_database=# \dt
 
 ```
 
-- вывода описания содержимого таблиц  \d+
+- вывода описания содержимого таблиц  `\d+`
 
 ```
 test_database=# \d+ orders 
@@ -99,7 +99,7 @@ Indexes:
 Access method: heap
 
 ```
-- выхода из psql  \q
+- выхода из psql  `\q`
 
 ```
 postgres-# \q
