@@ -229,7 +229,7 @@ pg_dynshmem    pg_serial     PG_VERSION		   test_dump.sql
 pg_hba.conf    pg_snapshots  pg_wal		   test_dump_v2.sql
 pg_ident.conf  pg_stat	     pg_xact
 pg_logical     pg_stat_tmp   postgresql.auto.conf
-root@1c38503bfa08:/var/lib/postgresql/data# 
+root@1c38503bfa08:/var/lib/postgresql/data#  
 
 
 ```
