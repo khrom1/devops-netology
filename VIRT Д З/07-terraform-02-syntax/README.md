@@ -211,7 +211,7 @@ khrom@ubuntu:~/terrafotm$
 ```
 
 
-![](\im\2022-06-27_010911.png)
+ ![](\im\2022-06-27_010911.png)
 
 
 ```
@@ -237,7 +237,9 @@ khrom@ubuntu:~/terrafotm$
 
 
 ### Ответ:
-  ![](\src\main.tf)   
+
+
+  https://github.com/khrom1/devops-netology/tree/main/VIRT%20Д%20З/07-terraform-02-syntax/src
 
 
 ---
