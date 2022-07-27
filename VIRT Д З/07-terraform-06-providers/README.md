@@ -43,7 +43,7 @@
 80 символов
 
 https://github.com/hashicorp/terraform-provider-aws/blob/c0584b28cc281774d9d4756c4d25b7a07391413b/internal/service/sqs/queue.go#L427
-  * 
+
 5. Какому регулярному выражению должно подчиняться имя? 
   
 
