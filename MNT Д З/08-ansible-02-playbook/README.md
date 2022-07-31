@@ -296,6 +296,9 @@ root@ubuntu:/home/khrom/ansible#
 ```
 
 9. Подготовьте README.md файл по своему playbook. В нём должно быть описано: что делает playbook, какие у него есть параметры и теги.
+
+https://github.com/khrom1/devops-netology/blob/main/MNT%20%D0%94%20%D0%97/08-ansible-02-playbook/playbook/README.md
+
 10. Готовый playbook выложите в свой репозиторий, в ответ предоставьте ссылку на него.
 
 ## Необязательная часть
