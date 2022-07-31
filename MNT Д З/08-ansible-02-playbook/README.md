@@ -301,6 +301,8 @@ https://github.com/khrom1/devops-netology/blob/main/MNT%20%D0%94%20%D0%97/08-ans
 
 10. Готовый playbook выложите в свой репозиторий, в ответ предоставьте ссылку на него.
 
+https://github.com/khrom1/devops-netology/tree/main/MNT%20%D0%94%20%D0%97/08-ansible-02-playbook/playbook
+
 ## Необязательная часть
 
 1. Приготовьте дополнительный хост для установки logstash.
