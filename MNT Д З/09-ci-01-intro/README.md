@@ -44,7 +44,9 @@
 
 Если всё отработало в рамках ожидания - выгрузить схемы workflow для импорта в XML. Файлы с workflow приложить к решению задания.
 
+https://github.com/khrom1/devops-netology/blob/main/MNT%20Д%20З/09-ci-01-intro/im/Not%20bug.xml
 
+https://github.com/khrom1/devops-netology/blob/main/MNT%20Д%20З/09-ci-01-intro/im/Баг%20workflow.xml
 
 
 
