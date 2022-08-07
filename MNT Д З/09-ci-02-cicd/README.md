@@ -50,7 +50,7 @@
 4. В ответе присылаем файл `maven-metadata.xml` для этого артефекта
 
 
-
+MNT Д З/09-ci-02-cicd/src/maven-metadata.xml
 
 ![](src/2022-08-07_195812.png)
 
@@ -71,6 +71,8 @@
 4. В ответе присылаем исправленный файл `pom.xml`
 
 ![](src/2022-08-07_211542.png)
+
+https://github.com/khrom1/devops-netology/blob/3950930a70c036898ffbd3e10f83ff62ac585699/MNT%20%D0%94%20%D0%97/09-ci-02-cicd/mvn/pom.xml
 
 
 ---
