@@ -1,0 +1,27 @@
+---
+nginx:
+  hosts:
+    51.250.80.220:
+      ansible_ssh_common_args: "-o StrictHostKeyChecking=no"
+    db01:
+      ansible_ssh_common_args: "-o StrictHostKeyChecking=no -J ubuntu@51.250.80.220"
+    db02:
+      ansible_ssh_common_args: "-o StrictHostKeyChecking=no -J ubuntu@51.250.80.220"
+    app:
+      ansible_ssh_common_args: "-o StrictHostKeyChecking=no -J ubuntu@51.250.80.220"
+    gitlab:
+      ansible_ssh_common_args: "-o StrictHostKeyChecking=no -J ubuntu@51.250.80.220"
+    monitoring:
+      ansible_ssh_common_args: "-o StrictHostKeyChecking=no -J ubuntu@51.250.80.220"
+    runner:
+      ansible_ssh_common_args: "-o StrictHostKeyChecking=no -J ubuntu@51.250.80.220"
+  vars:
+   
+    ip_nginx: 172.20.1.12
+    ip_db01: 172.20.1.20
+    ip_db02: 172.20.2.16
+    ip_app: 172.20.1.31
+    ip_gitlab: 172.20.1.11
+    ip_mon: 172.20.1.10
+    ip_runner: 172.20.1.34
+

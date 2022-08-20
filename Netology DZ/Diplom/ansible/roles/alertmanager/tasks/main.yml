@@ -1,0 +1,60 @@
+---
+- name: Updating  system
+  apt:
+    update_cache: yes
+    
+- name: Create user
+  user:
+    name: alertmanager
+    create_home: no
+    shell: "/usr/sbin/nologin"
+
+- name: Create directories
+  file:
+    path: "{{ item }}"
+    state: directory
+    owner: alertmanager
+    group: alertmanager
+  loop:
+    - '/tmp/alertmanager'
+    - '/etc/alertmanager'
+    - '/var/lib/prometheus/alertmanager'  
+    
+- name: Download files
+  unarchive:
+    src: https://github.com/prometheus/alertmanager/releases/download/v0.24.0/alertmanager-0.24.0.linux-amd64.tar.gz
+    dest: /tmp/alertmanager
+    creates: /tmp/alertmanager/alertmanager-0.24.0.linux-amd64
+    remote_src: yes
+
+- name: Copy files
+  copy:
+    src: /tmp/alertmanager/alertmanager-0.24.0.linux-amd64/{{ item }}
+    dest: /usr/local/bin/
+    remote_src: yes
+    mode: preserve
+    owner: alertmanager
+    group: alertmanager
+  loop: [ 'alertmanager', 'amtool' ]
+
+- name: Copy Conf file 
+  copy:
+    src: /tmp/alertmanager/alertmanager-0.24.0.linux-amd64/alertmanager.yml
+    dest: /etc/alertmanager/
+    remote_src: yes
+    mode: preserve
+    owner: alertmanager
+    group: alertmanager
+
+- name: Create file 
+  template:
+    src=templates/alertmanager.service
+    dest=/etc/systemd/system/
+  notify:
+    - systemd reload
+
+- name: Start
+  systemd:
+    name: alertmanager
+    state: started
+    enabled: yes
