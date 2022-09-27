@@ -2,22 +2,22 @@
 resource "local_file" "inventory" {
   content = <<-DOC
     ---
-     Prephost:
+    Prephost:
       hosts:
         ${yandex_compute_instance.nginx.network_interface.0.nat_ip_address}:
-          ansible_ssh_common_args: "-o StrictHostKeyChecking=no"
+          ansible_ssh_common_args: "-o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null"
         db01:
-          ansible_ssh_common_args: "-o StrictHostKeyChecking=no -J ubuntu@${yandex_compute_instance.nginx.network_interface.0.nat_ip_address}"
+          ansible_ssh_common_args: "-o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -J ubuntu@${yandex_compute_instance.nginx.network_interface.0.nat_ip_address}"
         db02:
-          ansible_ssh_common_args: "-o StrictHostKeyChecking=no -J ubuntu@${yandex_compute_instance.nginx.network_interface.0.nat_ip_address}"
+          ansible_ssh_common_args: "-o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -J ubuntu@${yandex_compute_instance.nginx.network_interface.0.nat_ip_address}"
         app:
-          ansible_ssh_common_args: "-o StrictHostKeyChecking=no -J ubuntu@${yandex_compute_instance.nginx.network_interface.0.nat_ip_address}"
+          ansible_ssh_common_args: "-o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -J ubuntu@${yandex_compute_instance.nginx.network_interface.0.nat_ip_address}"
         gitlab:
-          ansible_ssh_common_args: "-o StrictHostKeyChecking=no -J ubuntu@${yandex_compute_instance.nginx.network_interface.0.nat_ip_address}"
+          ansible_ssh_common_args: "-o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -J ubuntu@${yandex_compute_instance.nginx.network_interface.0.nat_ip_address}"
         monitoring:
-          ansible_ssh_common_args: "-o StrictHostKeyChecking=no -J ubuntu@${yandex_compute_instance.nginx.network_interface.0.nat_ip_address}"
+          ansible_ssh_common_args: "-o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -J ubuntu@${yandex_compute_instance.nginx.network_interface.0.nat_ip_address}"
         runner:
-          ansible_ssh_common_args: "-o StrictHostKeyChecking=no -J ubuntu@${yandex_compute_instance.nginx.network_interface.0.nat_ip_address}"
+          ansible_ssh_common_args: "-o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -J ubuntu@${yandex_compute_instance.nginx.network_interface.0.nat_ip_address}"
       vars:
         virtual_domain: ${var.domain}
         ip_nginx: ${yandex_compute_instance.nginx.network_interface.0.ip_address}
@@ -32,48 +32,48 @@ resource "local_file" "inventory" {
         ${yandex_compute_instance.nginx.network_interface.0.nat_ip_address}:
           ansible_connection: ssh
           ansible_user: ubuntu
-          ansible_ssh_common_args: "-o StrictHostKeyChecking=no"
+          ansible_ssh_common_args: "-o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null"
           virtual_domain: ${var.domain}
     database:
       hosts:
         db01:
           ansible_connection: ssh
           ansible_user: ubuntu
-          ansible_ssh_common_args: "-o StrictHostKeyChecking=no -J ubuntu@${yandex_compute_instance.nginx.network_interface.0.nat_ip_address}"
-          mysql_replication_role: 'master'
+          ansible_ssh_common_args: "-o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -J ubuntu@${yandex_compute_instance.nginx.network_interface.0.nat_ip_address}"
+          mysql_replication_role: master
           mysql_server_id: 1
         db02:
           ansible_connection: ssh
           ansible_user: ubuntu
-          ansible_ssh_common_args: "-o StrictHostKeyChecking=no -J ubuntu@${yandex_compute_instance.nginx.network_interface.0.nat_ip_address}"
-          mysql_replication_role: 'slave'
+          ansible_ssh_common_args: "-o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -J ubuntu@${yandex_compute_instance.nginx.network_interface.0.nat_ip_address}"
+          mysql_replication_role: slave
           mysql_server_id: 2
-    wordpress:
+    app:
       hosts:
         app:
           ansible_connection: ssh
           ansible_user: ubuntu
-          ansible_ssh_common_args: "-o StrictHostKeyChecking=no -J ubuntu@${yandex_compute_instance.nginx.network_interface.0.nat_ip_address}"
+          ansible_ssh_common_args: "-o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -J ubuntu@${yandex_compute_instance.nginx.network_interface.0.nat_ip_address}"
           virtual_domain: ${var.domain}
-    git:
+    gitlab:
       hosts:
         gitlab:
           ansible_connection: ssh
           ansible_user: ubuntu
-          ansible_ssh_common_args: "-o StrictHostKeyChecking=no -J ubuntu@${yandex_compute_instance.nginx.network_interface.0.nat_ip_address}"
+          ansible_ssh_common_args: "-o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -J ubuntu@${yandex_compute_instance.nginx.network_interface.0.nat_ip_address}"
           virtual_domain: ${var.domain}
-    mon:
+    monitoring:
       hosts:
         monitoring:
           ansible_connection: ssh
           ansible_user: ubuntu
-          ansible_ssh_common_args: "-o StrictHostKeyChecking=no -J ubuntu@${yandex_compute_instance.nginx.network_interface.0.nat_ip_address}"
-    gitrunner:
+          ansible_ssh_common_args: "-o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -J ubuntu@${yandex_compute_instance.nginx.network_interface.0.nat_ip_address}"
+    runner:
       hosts:
         runner:
           ansible_connection: ssh
           ansible_user: ubuntu
-          ansible_ssh_common_args: "-o StrictHostKeyChecking=no -J ubuntu@${yandex_compute_instance.nginx.network_interface.0.nat_ip_address}"
+          ansible_ssh_common_args: "-o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -J ubuntu@${yandex_compute_instance.nginx.network_interface.0.nat_ip_address}"
     DOC
   filename = "../ansible/inventory/stage.yml"
   file_permission = "0644"

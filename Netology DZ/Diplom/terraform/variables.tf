@@ -32,3 +32,7 @@ variable "domain" {
   type = string  
   default = "okhranka.ru"
 }
+
+variable "nginx_ip" {
+  default = "62.84.116.240"
+}

@@ -1,11 +1,7 @@
 ---
-- name: Nginx systemd
-  ansible.builtin.systemd:
-    name: nginx
-    enabled: true
-    state: started
+# handlers file for wordpress
+- name: reload apache
+  service: name=apache2 state=reloaded
 
-- name: Nginx restart service
-  ansible.builtin.service:
-    name: nginx
-    state: restarted
+- name: restart apache
+  service: name=apache2 state=restarted

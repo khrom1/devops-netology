@@ -19,6 +19,7 @@ resource "yandex_compute_instance" "monitoring" {
 
     network_interface {
      subnet_id = yandex_vpc_subnet.subnet1.id
+      ip_address  = "172.20.1.24"
       nat       = false
 
     }

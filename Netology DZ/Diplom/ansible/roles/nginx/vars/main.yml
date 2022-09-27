@@ -1,0 +1,4 @@
+ansible_user: ubuntu
+letsencrypt_email: khrom1@yandex.ru
+domain_name: okhranka.ru
+domain_names: okhranka.ru,www.okhranka.ru,grafana.okhranka.ru,prometheus.okhranka.ru,alertmanager.okhranka.ru,gitlab.okhranka.ru

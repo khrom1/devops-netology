@@ -1,0 +1,106 @@
+---
+- hosts: Prephost
+  become:
+    true
+  become_method:
+    sudo
+  become_user:
+    root
+  remote_user:
+    ubuntu
+  roles:
+    - preparehost
+
+- hosts: all
+  become: yes
+  become_method: sudo
+  tasks:
+  - name: "Update cache & Full system update"
+    apt:
+      update_cache: true
+      upgrade: dist
+      force_apt_get: true
+      
+- hosts: nginx
+  become:
+    true
+  become_method:
+    sudo
+  become_user:
+    root
+  remote_user:
+    ubuntu
+  roles:
+    - install_proxy
+    - nginx
+    - install_node_exporter
+  vars:
+    nginx_user: www-data
+
+- hosts: database
+  become:
+    true
+  become_method:
+    sudo
+  become_user:
+    root
+  remote_user:
+    ubuntu
+  roles:
+    - mysql
+    - install_node_exporter
+
+- hosts: app
+  become:
+    true
+  become_method:
+    sudo
+  become_user:
+    root
+  remote_user:
+    ubuntu
+  roles:
+    - wordpress
+    - install_node_exporter
+  vars:
+    - domain: "okhranka.ru"
+    - download_url: "http://wordpress.org/latest.tar.gz"
+    - wpdirectory: "/var/www"
+
+- hosts: monitoring
+  become:
+    true
+  become_method:
+    sudo
+  become_user:
+    root
+  remote_user:
+    ubuntu
+  roles:
+    - monitoring
+
+- hosts: gitlab
+  become:
+    true
+  become_method:
+    sudo
+  become_user:
+    root
+  remote_user:
+    ubuntu
+  roles:
+    - gitlab
+    - install_node_exporter
+
+- hosts: runner
+  become:
+    true
+  become_method:
+    sudo
+  become_user:
+    root
+  remote_user:
+    ubuntu
+  roles:
+    - runner
+    - install_node_exporter     

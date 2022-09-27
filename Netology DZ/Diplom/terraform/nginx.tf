@@ -12,14 +12,15 @@ resource "yandex_compute_instance" "nginx" {
 
     boot_disk {
         initialize_params {
-          image_id    = "${var.image_id}"
+          image_id    = "fd8q9r5va9p64uhch83k"
           size        = 10
         }
       }
 
     network_interface {
-    subnet_id = yandex_vpc_subnet.subnet1.id
-      nat       = true
+    subnet_id     = yandex_vpc_subnet.subnet1.id
+      ip_address  = "172.20.1.21"
+      nat         = true
 
     }
 

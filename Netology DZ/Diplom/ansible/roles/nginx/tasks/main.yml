@@ -1,57 +1,84 @@
-- name: Install Nginx Web Server
-  ansible.builtin.apt:
-    name: nginx
-    state: latest
-    update_cache: true
-  notify:
-    - Nginx systemd
+   - name: Upgrade system
+     apt: upgrade=dist update_cache=yes
 
-- name: Create Iptables NAT
-  ansible.builtin.iptables:
-    table: nat
-    chain: POSTROUTING
-    out_interface: eth0
-    jump: MASQUERADE
+   - name: Install nginx
+     apt: name=nginx state=latest
 
-- name: Enable IPv4 forwarding
-  ansible.posix.sysctl:
-    name: net.ipv4.ip_forward
-    value: 1
-    sysctl_set: true
-    state: present
-    reload: true
+   - name: Create Iptables NAT chain
+     iptables:
+      table: nat
+      chain: POSTROUTING
+      out_interface: 'eth0'
+      jump: MASQUERADE
 
-- name: Install IPtables-persistent
-  ansible.builtin.apt:
-    name: iptables-persistent
-    state: present
+   - name: Enable IPv4 forwarding
+     sysctl:
+       name: net.ipv4.ip_forward
+       value: 1
+       state: present
+       reload: True
 
-- name: Install Letsencrypt and certbot
-  ansible.builtin.include_tasks: lets_certbot.yml
+   - name: Install IPtables-persistent
+     apt:
+       name=iptables-persistent
+       state=present
 
-- name: Generate a self-signed SSL certificate
-  ansible.builtin.include_tasks: get_cert.yml
+   - name: install letsencrypt
+     apt: name=letsencrypt state=latest
+     
+   - name: Install python3-certbot-nginx
+     ansible.builtin.package:
+       name: "python3-certbot-nginx"
+       state: present  
 
-- name: Disable default site
-  ansible.builtin.file:
-    path: /etc/nginx/sites-enabled/default
-    state: absent
+   - name: create letsencrypt directory
+     file: name=/var/www/letsencrypt state=directory
 
-- name: Import configuration nginx
-  ansible.builtin.template:
-    src: templates/nginx.conf
-    dest: /etc/nginx/nginx.conf
-    mode: 0644
-    
-- name: Adding basic html page
-  template:
-    src: templates/index.html
-    dest: /var/www/index.html
+   - name: Remove default nginx config
+     file: name=/etc/nginx/sites-enabled/default state=absent
 
-- name: Apply Nginx template
-  ansible.builtin.template:
-    src: templates/nginx_vhosts.conf
-    dest: /etc/nginx/conf.d/{{ virtual_domain }}.conf
-    mode: 0644
-  notify:
-    - Nginx restart service
+   - name: Install system nginx config
+     template:
+       src: templates/nginx.conf.j2
+       dest: /etc/nginx/nginx.conf
+
+   - name: Install nginx site for letsencrypt requests
+     template:
+       src: templates/nginx-http.j2
+       dest: /etc/nginx/sites-enabled/http
+
+   - name: Reload nginx to activate letsencrypt site
+     service: name=nginx state=restarted
+
+   - name: Create letsencrypt certificate
+     shell: letsencrypt certonly  -n --webroot -w /var/www/letsencrypt -m {{ letsencrypt_email }} --agree-tos -d {{ domain_names }}
+     args:
+       creates: /etc/letsencrypt/live/{{ domain_name }}
+
+   - name: Ensures letsencrypt dir exists
+     file: path=/etc/letsencrypt/live/{{ domain_name }} state=directory
+
+   - name: Generate dhparams
+     shell: openssl dhparam -out /etc/nginx/dhparams.pem 2048
+     args:
+       creates: /etc/nginx/dhparams.pem
+
+   - name: Install nginx site for specified site
+     template:
+       src: templates/nginx-le.j2
+       dest: /etc/nginx/sites-enabled/le
+
+
+
+   - name: Add letsencrypt cronjob for cert renewal
+     cron:
+       name: letsencrypt_renewal
+       special_time: weekly
+       job: letsencrypt --renew certonly  -n --webroot -w /var/www/letsencrypt -m {{ letsencrypt_email }} --agree-tos -d {{ domain_names }} 
+
+   - name: Reload nginx to activate letsencrypt site
+     service: name=nginx state=restarted
+     
+   - name: Reboot a slow machine that might have lots of updates to apply
+     ansible.builtin.reboot:
+       reboot_timeout: 3600

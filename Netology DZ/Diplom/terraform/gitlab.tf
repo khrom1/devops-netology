@@ -19,6 +19,7 @@ resource "yandex_compute_instance" "gitlab" {
 
     network_interface {
       subnet_id = yandex_vpc_subnet.subnet1.id
+      ip_address  = "172.20.1.26"
       nat       = false
 
     }

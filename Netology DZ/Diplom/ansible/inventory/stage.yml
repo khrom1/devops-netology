@@ -1,73 +1,73 @@
 ---
 Prephost:
   hosts:
-    51.250.1.75:
-      ansible_ssh_common_args: "-o StrictHostKeyChecking=no"
+    51.250.2.182:
+      ansible_ssh_common_args: "-o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null"
     db01:
-      ansible_ssh_common_args: "-o StrictHostKeyChecking=no -J ubuntu@51.250.1.75"
+      ansible_ssh_common_args: "-o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -J ubuntu@51.250.2.182"
     db02:
-      ansible_ssh_common_args: "-o StrictHostKeyChecking=no -J ubuntu@51.250.1.75"
+      ansible_ssh_common_args: "-o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -J ubuntu@51.250.2.182"
     app:
-      ansible_ssh_common_args: "-o StrictHostKeyChecking=no -J ubuntu@51.250.1.75"
+      ansible_ssh_common_args: "-o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -J ubuntu@51.250.2.182"
     gitlab:
-      ansible_ssh_common_args: "-o StrictHostKeyChecking=no -J ubuntu@51.250.1.75"
+      ansible_ssh_common_args: "-o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -J ubuntu@51.250.2.182"
     monitoring:
-      ansible_ssh_common_args: "-o StrictHostKeyChecking=no -J ubuntu@51.250.1.75"
+      ansible_ssh_common_args: "-o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -J ubuntu@51.250.2.182"
     runner:
-      ansible_ssh_common_args: "-o StrictHostKeyChecking=no -J ubuntu@51.250.1.75"
+      ansible_ssh_common_args: "-o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -J ubuntu@51.250.2.182"
   vars:
     virtual_domain: okhranka.ru
-    ip_nginx: 172.20.1.4
-    ip_db01: 172.20.1.9
-    ip_db02: 172.20.2.12
-    ip_app: 172.20.1.21
-    ip_gitlab: 172.20.1.15
-    ip_mon: 172.20.1.6
-    ip_runner: 172.20.1.26
+    ip_nginx: 172.20.1.21
+    ip_db01: 172.20.1.22
+    ip_db02: 172.20.2.22
+    ip_app: 172.20.1.23
+    ip_gitlab: 172.20.1.26
+    ip_mon: 172.20.1.24
+    ip_runner: 172.20.1.25
 nginx:
   hosts:
-    51.250.1.75:
+    51.250.2.182:
       ansible_connection: ssh
       ansible_user: ubuntu
-      ansible_ssh_common_args: "-o StrictHostKeyChecking=no"
+      ansible_ssh_common_args: "-o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null"
       virtual_domain: okhranka.ru
 database:
   hosts:
     db01:
       ansible_connection: ssh
       ansible_user: ubuntu
-      ansible_ssh_common_args: "-o StrictHostKeyChecking=no -J ubuntu@51.250.1.75"
-      mysql_replication_role: 'master'
+      ansible_ssh_common_args: "-o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -J ubuntu@51.250.2.182"
+      mysql_replication_role: master
       mysql_server_id: 1
     db02:
       ansible_connection: ssh
       ansible_user: ubuntu
-      ansible_ssh_common_args: "-o StrictHostKeyChecking=no -J ubuntu@51.250.1.75"
-      mysql_replication_role: 'slave'
+      ansible_ssh_common_args: "-o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -J ubuntu@51.250.2.182"
+      mysql_replication_role: slave
       mysql_server_id: 2
-wordpress:
+app:
   hosts:
     app:
       ansible_connection: ssh
       ansible_user: ubuntu
-      ansible_ssh_common_args: "-o StrictHostKeyChecking=no -J ubuntu@51.250.1.75"
+      ansible_ssh_common_args: "-o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -J ubuntu@51.250.2.182"
       virtual_domain: okhranka.ru
-git:
+gitlab:
   hosts:
     gitlab:
       ansible_connection: ssh
       ansible_user: ubuntu
-      ansible_ssh_common_args: "-o StrictHostKeyChecking=no -J ubuntu@51.250.1.75"
+      ansible_ssh_common_args: "-o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -J ubuntu@51.250.2.182"
       virtual_domain: okhranka.ru
-mon:
+monitoring:
   hosts:
     monitoring:
       ansible_connection: ssh
       ansible_user: ubuntu
-      ansible_ssh_common_args: "-o StrictHostKeyChecking=no -J ubuntu@51.250.1.75"
-gitrunner:
+      ansible_ssh_common_args: "-o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -J ubuntu@51.250.2.182"
+runner:
   hosts:
     runner:
       ansible_connection: ssh
       ansible_user: ubuntu
-      ansible_ssh_common_args: "-o StrictHostKeyChecking=no -J ubuntu@51.250.1.75"
+      ansible_ssh_common_args: "-o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -J ubuntu@51.250.2.182"

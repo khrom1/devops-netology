@@ -10,6 +10,7 @@ resource "yandex_dns_recordset" "rs1" {
   type    = "A"
   ttl     = 200
   data    = [" ${yandex_compute_instance.nginx.network_interface.0.nat_ip_address} "]
+  depends_on = [yandex_compute_instance.nginx]
 }
 
 resource "yandex_dns_recordset" "rs2" {
@@ -18,6 +19,7 @@ resource "yandex_dns_recordset" "rs2" {
   type    = "A"
   ttl     = 200
   data    = [" ${yandex_compute_instance.nginx.network_interface.0.nat_ip_address} "]
+  depends_on = [yandex_compute_instance.nginx]
 }
 
 resource "yandex_dns_recordset" "rs3" {
@@ -26,6 +28,7 @@ resource "yandex_dns_recordset" "rs3" {
   type    = "A"
   ttl     = 200
   data    = [" ${yandex_compute_instance.nginx.network_interface.0.nat_ip_address} "]
+  depends_on = [yandex_compute_instance.nginx]
 }
 
 resource "yandex_dns_recordset" "rs4" {
@@ -34,6 +37,7 @@ resource "yandex_dns_recordset" "rs4" {
   type    = "A"
   ttl     = 200
   data    = [" ${yandex_compute_instance.nginx.network_interface.0.nat_ip_address} "]
+  depends_on = [yandex_compute_instance.nginx]
 }
 
 resource "yandex_dns_recordset" "rs5" {
@@ -42,6 +46,7 @@ resource "yandex_dns_recordset" "rs5" {
   type    = "A"
   ttl     = 200
   data    = [" ${yandex_compute_instance.nginx.network_interface.0.nat_ip_address} "]
+  depends_on = [yandex_compute_instance.nginx]
 }
 
 resource "yandex_dns_recordset" "rs6" {
@@ -50,6 +55,7 @@ resource "yandex_dns_recordset" "rs6" {
   type    = "A"
   ttl     = 200
   data    = [" ${yandex_compute_instance.nginx.network_interface.0.nat_ip_address} "]
+  depends_on = [yandex_compute_instance.nginx]
 }
 
 

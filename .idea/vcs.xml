@@ -8,6 +8,8 @@
     <mapping directory="$PROJECT_DIR$/Netology Д З/pcs-devsys-diplom" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/Netology Д З/sysadm-homeworks" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/Netology Д З/virt-homeworks" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/ansible-role-gitlab" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/ansible-role-mysql" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/pcs-devsys-diplom" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/sysadm-homeworks" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/terraform_clone" vcs="Git" />

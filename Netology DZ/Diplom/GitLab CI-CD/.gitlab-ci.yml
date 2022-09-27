@@ -1,0 +1,24 @@
+---
+ before_script:
+  - 'which ssh-agent || ( apt-get update -y && apt-get install openssh-client -y )'
+  - eval $(ssh-agent -s)
+  - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add - > /dev/null
+  - mkdir -p ~/.ssh
+  - chmod 700 ~/.ssh
+
+ variables:
+   CI_DEBUG_TRACE: "true"
+   DIR: /var/www/okhranka.ru/wordpress
+   THEME: rock-star
+
+ deploy-job:
+   stage: deploy
+   script:
+
+     - ssh -o StrictHostKeyChecking=no ubuntu@172.20.1.23 sudo chown ubuntu /var/www/okhranka.ru/wordpress/ -R;
+     - scp -r  ./wp-content/themes/$THEME ubuntu@172.20.1.23:/var/www/okhranka.ru/wordpress/wp-content/themes
+     - ssh -o StrictHostKeyChecking=no ubuntu@172.20.1.23
+        cd $DIR" && wp theme activate $THEME"
+
+
+

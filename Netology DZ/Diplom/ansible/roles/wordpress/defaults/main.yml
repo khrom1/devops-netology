@@ -1,28 +1,17 @@
 ---
-db_user: wordpress
-db_pass: wordpress
-db_name: wordpress
-db_host: db01
-owner: www-data
-group: www-data
-doc_root: "/var/www/{{ virtual_domain }}"
-php_modules:
-  - "php7.4"
-  - "php7.4-fpm"
-  - "php7.4-mysql"
-  - "php-common"
-  - "php7.4-cli"
-  - "php7.4-common"
-  - "php7.4-json"
-  - "php7.4-opcache"
-  - "php7.4-readline"
-  - "php7.4-mbstring"
-  - "php7.4-xml"
-  - "php7.4-gd"
-  - "php7.4-curl"
-  - "php7.4-zip"
+# defaults file for wordpress
+#System Settings
+php_modules: [ 'php-curl', 'php-gd', 'php-mbstring', 'php-xml', 'php-xmlrpc', 'php-soap', 'php-intl', 'php-zip' ]
 
-# Defaults file for wp-cli
-wp_cli_phar_url: https://raw.github.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
-wp_cli_bin_path: "/usr/bin/{{ wp_cli_bin_command }}"
-wp_cli_bin_command: wp
+#MySQL Settings
+mysql_root_password: "root"
+mysql_db: "wordpress"
+mysql_user: "wordpress"
+mysql_password: "wordpress"
+mysql_server: "db01.okhranka.ru"
+
+#HTTP Settings
+http_host: "okhranka.ru"
+http_conf: "okhranka.ru.conf"
+http_port: "80"
+

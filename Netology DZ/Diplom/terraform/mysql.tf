@@ -12,13 +12,14 @@ resource "yandex_compute_instance" "db01" {
 
     boot_disk {
         initialize_params {
-          image_id    = "${var.image_id}"
+          image_id    = "fd8c00efhiopj3rlnlbn"
           size        = 10
         }
       }
 
     network_interface {
      subnet_id = yandex_vpc_subnet.subnet1.id
+      ip_address  = "172.20.1.22"
       nat       = false
 
     }
@@ -43,13 +44,14 @@ resource "yandex_compute_instance" "db01" {
 
     boot_disk {
         initialize_params {
-          image_id    = "${var.image_id}"
+          image_id    = "fd8c00efhiopj3rlnlbn"
           size        = 10
         }
       }
 
     network_interface {
      subnet_id = yandex_vpc_subnet.subnet2.id
+      ip_address  = "172.20.2.22"
       nat       = false
 
     }

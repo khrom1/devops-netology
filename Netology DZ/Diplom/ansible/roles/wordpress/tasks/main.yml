@@ -1,87 +1,85 @@
-- name: Install Nginx Web Server
-  ansible.builtin.apt:
-    name: nginx
-    state: latest
-  notify:
-    - Nginx systemd
+---
+# tasks file for wordpress
+- name: Update apt cache
+  apt: update_cache=yes cache_valid_time=3600
 
-- name: Disable default site
-  ansible.builtin.file:
-    path: /etc/nginx/sites-enabled/default
-    state: absent
+- name: Install prerequisites
+  apt: name=aptitude update_cache=yes state=latest force_apt_get=yes
 
-- name: Replace default site
-  ansible.builtin.template:
-    src: templates/nginx.conf
-    dest: /etc/nginx/conf.d/
-    mode: 0644
-  notify:
-    - Nginx restart service
+- name: Install LAMP Packages
+  apt: name={{ item }} update_cache=yes state=latest
+  loop: [ 'apache2', 'php', 'php-mysql', 'libapache2-mod-php' ]
 
 - name: Install PHP Extensions
-  ansible.builtin.apt:
-    name: "{{ item }}"
-    update_cache: true
-    state: latest
-  with_items: "{{ php_modules }}"
+  apt: name={{ item }} update_cache=yes state=latest
+  loop: "{{ php_modules }}"
 
-- name: Purge Apache2
-  ansible.builtin.apt:
-    name: apache2
-    state: absent
-    purge: true
-
+# Apache Configuration
 - name: Create document root
-  ansible.builtin.file:
-    path: "{{ doc_root }}"
+  file:
+    path: "/var/www/{{ http_host }}"
     state: directory
     owner: "www-data"
     group: "www-data"
     mode: '0755'
 
+- name: Set up Apache VirtualHost
+  template:
+    src: "templates/apache.conf.j2"
+    dest: "/etc/apache2/sites-available/{{ http_conf }}"
+  notify: reload apache
+
+- name: Enable rewrite module
+  shell: /usr/sbin/a2enmod rewrite
+  notify: reload apache
+
+- name: Enable new site
+  shell: /usr/sbin/a2ensite {{ http_conf }}
+  notify: reload apache
+
+- name: Disable default Apache site
+  shell: /usr/sbin/a2dissite 000-default.conf
+  notify: restart apache
+
+# UFW Configuration
+- name: "UFW - Allow HTTP on port {{ http_port }}"
+  ufw:
+    rule: allow
+    port: "{{ http_port }}"
+    proto: tcp
+
+# WordPress Configuration
 - name: Download and unpack latest WordPress
-  ansible.builtin.unarchive:
+  unarchive:
     src: https://wordpress.org/latest.tar.gz
-    dest: "{{ doc_root }}"
-    remote_src: true
-    extra_opts: [--strip-components=1]
-    creates: "{{ doc_root }}/wp-admin"
+    dest: "/var/www/{{ http_host }}"
+    remote_src: yes
+    creates: "/var/www/{{ http_host }}/wordpress"
 
 - name: Set ownership
-  ansible.builtin.file:
-    path: "{{ doc_root }}"
+  file:
+    path: "/var/www/{{ http_host }}"
     state: directory
-    recurse: true
-    owner: "{{ owner }}"
-    group: "{{ group }}"
-    mode: '0750'
+    recurse: yes
+    owner: www-data
+    group: www-data
 
 - name: Set permissions for directories
-  ansible.builtin.shell: "/usr/bin/find {{ doc_root }}/ -type d -exec chmod 755 {} \\;"
-  changed_when: false
+  shell: "/usr/bin/find /var/www/{{ http_host }}/wordpress/ -type d -exec chmod 750 {} \\;"
 
 - name: Set permissions for files
-  ansible.builtin.shell: "/usr/bin/find {{ doc_root }}/ -type f -exec chmod 644 {} \\;"
-  changed_when: false
+  shell: "/usr/bin/find /var/www/{{ http_host }}/wordpress/ -type f -exec chmod 640 {} \\;"
 
 - name: Set up wp-config
-  ansible.builtin.template:
+  template:
     src: "templates/wp-config.php.j2"
-    dest: "{{ doc_root }}/wp-config.php"
-    owner: "{{ owner }}"
-    group: "{{ group }}"
-    mode: '0640'
-
+    dest: "/var/www/{{ http_host }}/wordpress/wp-config.php"
+    
 - name: Install WP-CLI for Runner
   ansible.builtin.get_url:
-    url: "{{ wp_cli_phar_url }}"
-    dest: "{{ wp_cli_bin_path }}"
+    url: "https://raw.github.com/wp-cli/builds/gh-pages/phar/wp-cli.phar"
+    dest: "/usr/bin/wp"
     force: true
     owner: root
     group: root
     mode: 0755
-
-- name: Restart nginx, in all cases
-  ansible.builtin.service:
-    name: nginx
-    state: restarted
